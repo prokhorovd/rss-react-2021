@@ -1,0 +1,118 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.App {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/*SEARCH BAR*/
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e07a5f;
+    margin: 0;
+    height: 150px;
+}
+
+.search-bar__form {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-bar__label {
+    visibility: hidden;
+}
+
+.search-bar__input {
+    margin-bottom: 10px;
+    width: 25vw;
+    height: 40px;
+    font-size: 18px;
+    background-color: #f4f1de;
+    border-radius: 5px;
+    border: hidden;
+    border-bottom: solid 4px black;
+    padding-left: 10px;
+    /*box-shadow: black;*/
+}
+
+.search-bar__input:focus {
+    outline: none;
+}
+
+.search-bar__submit {
+    position: absolute;
+    right: 0;
+    background-color: #F9F0DA;
+    border: hidden;
+}
+
+/*MOVIE CARD*/
+
+.movie-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    background-color: #f2cc8f;
+}
+
+.movie-card {
+    display: flex;
+    margin: 10px;
+    flex-direction: column;
+    background-color: #f4f1de;
+    width: 250px;
+    height: 320px;
+    border-radius: 2px;
+    color: #3d405b;
+    transition: 0.3s;
+}
+.movie-card:hover {
+    transform: scale(1.05);
+}
+
+.movie-card__name {
+    display: flex;
+    align-items: flex-start;
+}
+
+.movie-card__img {
+    display: block;
+    width: 67px;
+    height: 98px;
+    margin: 5px;
+}
+
+.movie-card__header {
+    margin: 15px 5px 5px 10px;
+    font-size: 18px;
+}
+
+.movie-card__meta {
+    display: flex;
+    justify-content: space-between;
+}
+
+.movie-card__data {
+    margin: 5px;
+    font-size: 14px;
+}
+.movie-card__rating {
+    margin: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    width: 50px;
+
+}
+
+.movie-card__description {
+    margin: 10px 15px;
+    font-size: 16px;
+}
