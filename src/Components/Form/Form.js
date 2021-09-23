@@ -31,7 +31,7 @@ class Form extends Component {
     } else {
       this.setState({ [name]: value });
     }
-    console.log(this.state);
+    // console.log(this.state);
   }
 
   validateForm() {
@@ -72,7 +72,9 @@ class Form extends Component {
     const timeDifference = Date.parse(dateNow.toDateString()) - userDoB;
     const differenceInDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
     // console.log(differenceInDays / 365 < 18);
-    if (timeDifference <= 0) {
+    if (this.state.dateOfBirth.length === 0) {
+      errors.dateOfBirthError = 'Please choose your birthdate';
+    } else if (timeDifference <= 0) {
       errors.dateOfBirthError = "People from future can't use our service";
     } else if (differenceInDays / 365 < 18) {
       errors.dateOfBirthError = 'You must be 18 or older to use this service';
