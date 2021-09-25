@@ -6,5 +6,11 @@ body {
 .App {
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.card-field {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
 }

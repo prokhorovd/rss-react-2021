@@ -10,7 +10,7 @@ class Form extends Component {
       dateOfBirth: '',
       gender: 'undefined',
       rulesAccept: false,
-      receiveNews: "true",
+      receiveNews: 'true',
       firstNameError: '',
       lastNameError: '',
       genderError: '',
@@ -24,14 +24,17 @@ class Form extends Component {
 
   changeHandler(event) {
     // console.log(event.target.name, event.target.value);
-    const { name, value, type, checked } = event.target;
+    const {
+      name,
+      value,
+      type,
+      checked,
+    } = event.target;
     if (type === 'checkbox') {
-      // console.log(event.target.name, event.target.checked)
       this.setState({ [name]: checked });
     } else {
       this.setState({ [name]: value });
     }
-    // console.log(this.state);
   }
 
   validateForm() {
@@ -42,11 +45,16 @@ class Form extends Component {
       dateOfBirthError: '',
       rulesAcceptError: '',
     };
-    const { firstName, lastName, dateOfBirth, gender, rulesAccept } = this.state;
+    const {
+      firstName,
+      lastName,
+      dateOfBirth,
+      gender,
+      rulesAccept,
+    } = this.state;
     // first name field validation
     if (!firstName) {
       errors.firstNameError = 'Please fill this field';
-      // console.log('error on field firstName detected');
     } else if (!/^[a-z ,.'-]+$/i.test(firstName)) {
       errors.firstNameError = 'This field can contain letters only';
     } else if (firstName.length < 2 || firstName.length > 12) {
@@ -55,23 +63,24 @@ class Form extends Component {
     // last name field validation
     if (!lastName) {
       errors.lastNameError = 'Please fill this field';
-      // console.log('error on field firstName detected');
     } else if (!/^[a-z ,.'-]+$/i.test(lastName)) {
       errors.lastNameError = 'This field can contain letters only';
     } else if (lastName.length < 2 || lastName.length > 12) {
       errors.lastNameError = 'First name must have length between 2 and 12 characters';
     }
+    // gender validation
     if (gender === 'undefined') {
       errors.genderError = 'Please select your gender';
     }
+    // rules acceptance validation
     if (rulesAccept !== true) {
       errors.rulesAcceptError = 'Please accept the rules';
     }
+    // date validation
     const dateNow = new Date();
     const userDoB = Date.parse(dateOfBirth);
     const timeDifference = Date.parse(dateNow.toDateString()) - userDoB;
     const differenceInDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
-    // console.log(differenceInDays / 365 < 18);
     if (this.state.dateOfBirth.length === 0) {
       errors.dateOfBirthError = 'Please choose your birthdate';
     } else if (timeDifference <= 0) {
@@ -79,16 +88,14 @@ class Form extends Component {
     } else if (differenceInDays / 365 < 18) {
       errors.dateOfBirthError = 'You must be 18 or older to use this service';
     }
-    // console.log(errors);
+    // sent errors to state
     this.setState(errors);
     return errors;
   }
 
   submitHandler(event) {
-    // console.log(this.state);
     event.preventDefault();
     const errorsList = this.validateForm(this.state);
-    // console.log(errorsList);
     let formIsValid = true;
     Object.keys(errorsList).forEach((error) => {
       if (errorsList[error].length > 0) {
@@ -96,9 +103,12 @@ class Form extends Component {
       }
     });
     if (formIsValid) {
-      console.log('form was submitted', this.state);
+      this.props.formSubmit(event, this.state);
       this.clearForm();
     }
+    // lines below temporary disable validation
+    // this.props.formSubmit(event, this.state);
+    // this.clearForm();
   }
 
   clearForm() {
@@ -108,7 +118,7 @@ class Form extends Component {
       dateOfBirth: '',
       gender: 'undefined',
       rulesAccept: false,
-      receiveNews: false,
+      receiveNews: 'true',
     });
   }
 
@@ -160,6 +170,7 @@ class Form extends Component {
               type="date"
               name="dateOfBirth"
               max="2099-01-01"
+              value={this.state.dateOfBirth}
               onChange={this.changeHandler}
             />
             <span className="error-field">
