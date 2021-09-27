@@ -17,12 +17,12 @@ class Form extends Component {
       dateOfBirthError: '',
       rulesAcceptError: '',
     };
-    this.changeHandler = this.changeHandler.bind(this);
-    this.submitHandler = this.submitHandler.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.validateForm = this.validateForm.bind(this);
   }
 
-  changeHandler(event) {
+  handleChange(event) {
     // console.log(event.target.name, event.target.value);
     const {
       name,
@@ -93,7 +93,7 @@ class Form extends Component {
     return errors;
   }
 
-  submitHandler(event) {
+  handleSubmit(event) {
     event.preventDefault();
     const errorsList = this.validateForm(this.state);
     let formIsValid = true;
@@ -126,7 +126,7 @@ class Form extends Component {
     return (
       <div className="form">
         <h3 className="form-title">Please fill out the form</h3>
-        <form onSubmit={this.submitHandler}>
+        <form onSubmit={this.handleSubmit}>
           <label className="label" htmlFor="firstName">
             First Name:
             <input
@@ -134,7 +134,7 @@ class Form extends Component {
               name="firstName"
               placeholder="First Name"
               value={this.state.firstName}
-              onChange={this.changeHandler}
+              onChange={this.handleChange}
             />
             <span className="error-field">
               {this.state.firstNameError.length !== 0 ? this.state.firstNameError : ''}
@@ -148,14 +148,14 @@ class Form extends Component {
               name="lastName"
               placeholder="Last Name"
               value={this.state.lastName}
-              onChange={this.changeHandler}
+              onChange={this.handleChange}
             />
             <span className="error-field">{this.state.lastNameError.length !== 0 ? this.state.lastNameError : ''}</span>
           </label>
           <br />
           <label className="label" htmlFor="gender">
             Choose your gender:
-            <select className="select-input" name="gender" value={this.state.gender} onChange={this.changeHandler}>
+            <select className="select-input" name="gender" value={this.state.gender} onChange={this.handleChange}>
               <option value="undefined" disabled>Gender</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
@@ -171,7 +171,7 @@ class Form extends Component {
               name="dateOfBirth"
               max="2099-01-01"
               value={this.state.dateOfBirth}
-              onChange={this.changeHandler}
+              onChange={this.handleChange}
             />
             <span className="error-field">
               {this.state.dateOfBirthError.length !== 0 ? this.state.dateOfBirthError : ''}
@@ -187,7 +187,7 @@ class Form extends Component {
               name="receiveNews"
               value="true"
               checked={this.state.receiveNews === 'true'}
-              onChange={this.changeHandler}
+              onChange={this.handleChange}
               />
             <label className="label" className="switch-field__label" htmlFor="receiveNewsTrue">Yes</label>
             <input
@@ -197,13 +197,13 @@ class Form extends Component {
               name="receiveNews"
               value="false"
               checked={this.state.receiveNews === 'false'}
-              onChange={this.changeHandler}
+              onChange={this.handleChange}
             />
             <label className="switch-field__label" htmlFor="receiveNewsFalse">No</label>
           </div>
           <label className="label" htmlFor="rulesAccept">
             I have read and accept all rules
-            <input type="checkbox" name="rulesAccept" checked={this.state.rulesAccept} onChange={this.changeHandler}/>
+            <input type="checkbox" name="rulesAccept" checked={this.state.rulesAccept} onChange={this.handleChange}/>
             <span className="error-field">
               {this.state.rulesAcceptError.length !== 0 ? this.state.rulesAcceptError : ''}
             </span>
