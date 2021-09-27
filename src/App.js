@@ -22,7 +22,7 @@ class App extends Component {
       <div className="App">
         <Form formSubmit={this.formSubmit} />
         <div className="card-field">
-          {this.state.cards.map((item, index) => <Card key={index} card={item} />)}
+          {this.state.cards.map((item) => <Card key={item.uniqueID} card={item} />)}
         </div>
       </div>
     );

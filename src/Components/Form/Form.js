@@ -11,6 +11,7 @@ class Form extends Component {
       gender: 'undefined',
       rulesAccept: false,
       receiveNews: 'true',
+      uniqueID: '',
       firstNameError: '',
       lastNameError: '',
       genderError: '',
@@ -103,6 +104,9 @@ class Form extends Component {
       }
     });
     if (formIsValid) {
+      // generate card unique ID
+      const uniqueID = Math.floor(Math.random() * 1000000 + 1);
+      this.setState({ uniqueID });
       this.props.formSubmit(event, this.state);
       this.clearForm();
     }
@@ -119,6 +123,7 @@ class Form extends Component {
       gender: 'undefined',
       rulesAccept: false,
       receiveNews: 'true',
+      uniqueID: '',
     });
   }
 
