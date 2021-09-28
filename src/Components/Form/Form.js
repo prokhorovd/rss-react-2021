@@ -11,7 +11,7 @@ class Form extends Component {
       gender: '',
       rulesAccept: false,
       receiveNews: true,
-      uniqueID: '',
+      uniqueID: this.generateID(),
       firstNameError: '',
       lastNameError: '',
       genderError: '',
@@ -31,7 +31,6 @@ class Form extends Component {
       type,
       checked,
     } = event.target;
-    console.log('HandleChange: type is ', type, 'name is ', name, 'checked param is ', checked, 'value is ', value);
     if (type === 'checkbox') {
       this.setState({ [name]: checked });
     } else if (type === 'radio') {
@@ -97,6 +96,12 @@ class Form extends Component {
     return errors;
   }
 
+  generateID() {
+    const idNum = Math.floor(Math.random() * 1000000 + 1);
+    // console.log('generated id: ', idNum);
+    return idNum;
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     const errorsList = this.validateForm(this.state);
@@ -107,9 +112,6 @@ class Form extends Component {
       }
     });
     if (formIsValid) {
-      // generate card unique ID
-      const uniqueID = Math.floor(Math.random() * 1000000 + 1);
-      this.setState({ uniqueID });
       this.props.formSubmit(event, this.state);
       this.clearForm();
     }
@@ -126,7 +128,7 @@ class Form extends Component {
       gender: '',
       rulesAccept: false,
       receiveNews: true,
-      uniqueID: '',
+      uniqueID: this.generateID(),
     });
   }
 
