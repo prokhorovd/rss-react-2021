@@ -30,7 +30,7 @@ class Card extends Component {
         </p>
         <p>
           Wanted to receive news:
-          <span className="person-card__data">{receiveNews === 'true' ? 'yes' : 'no'}</span>
+          <span className="person-card__data">{receiveNews === true ? 'yes' : 'no'}</span>
         </p>
       </div>
     );

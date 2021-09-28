@@ -10,7 +10,7 @@ class Form extends Component {
       dateOfBirth: '',
       gender: '',
       rulesAccept: false,
-      receiveNews: 'true',
+      receiveNews: true,
       uniqueID: '',
       firstNameError: '',
       lastNameError: '',
@@ -31,8 +31,11 @@ class Form extends Component {
       type,
       checked,
     } = event.target;
+    console.log('HandleChange: type is ', type, 'name is ', name, 'checked param is ', checked, 'value is ', value);
     if (type === 'checkbox') {
       this.setState({ [name]: checked });
+    } else if (type === 'radio') {
+      this.setState({ [name]: !this.state[name] });
     } else {
       this.setState({ [name]: value });
     }
@@ -122,7 +125,7 @@ class Form extends Component {
       dateOfBirth: '',
       gender: '',
       rulesAccept: false,
-      receiveNews: 'true',
+      receiveNews: true,
       uniqueID: '',
     });
   }
@@ -190,8 +193,8 @@ class Form extends Component {
               type="radio"
               id="receiveNewsTrue"
               name="receiveNews"
-              value="true"
-              checked={this.state.receiveNews === 'true'}
+              // value={true}
+              checked={this.state.receiveNews}
               onChange={this.handleChange}
               />
             <label className="label" className="switch-field__label" htmlFor="receiveNewsTrue">Yes</label>
@@ -200,8 +203,8 @@ class Form extends Component {
               type="radio"
               id="receiveNewsFalse"
               name="receiveNews"
-              value="false"
-              checked={this.state.receiveNews === 'false'}
+              // value=""
+              checked={!this.state.receiveNews}
               onChange={this.handleChange}
             />
             <label className="switch-field__label" htmlFor="receiveNewsFalse">No</label>
