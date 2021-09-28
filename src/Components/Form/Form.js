@@ -8,7 +8,7 @@ class Form extends Component {
       firstName: '',
       lastName: '',
       dateOfBirth: '',
-      gender: 'undefined',
+      gender: '',
       rulesAccept: false,
       receiveNews: 'true',
       uniqueID: '',
@@ -70,7 +70,7 @@ class Form extends Component {
       errors.lastNameError = 'First name must have length between 2 and 12 characters';
     }
     // gender validation
-    if (gender === 'undefined') {
+    if (gender === '') {
       errors.genderError = 'Please select your gender';
     }
     // rules acceptance validation
@@ -120,7 +120,7 @@ class Form extends Component {
       firstName: '',
       lastName: '',
       dateOfBirth: '',
-      gender: 'undefined',
+      gender: '',
       rulesAccept: false,
       receiveNews: 'true',
       uniqueID: '',
@@ -161,7 +161,7 @@ class Form extends Component {
           <label className="label" htmlFor="gender">
             Choose your gender:
             <select className="select-input" name="gender" value={this.state.gender} onChange={this.handleChange}>
-              <option value="undefined" disabled>Gender</option>
+              <option value='' disabled>Gender</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </select>
