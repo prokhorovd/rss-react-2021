@@ -112,7 +112,7 @@ class Form extends Component {
       }
     });
     if (formIsValid) {
-      this.props.formSubmit(event, this.state);
+      this.props.onSubmit(event, this.state);
       this.clearForm();
     }
     // lines below temporary disable validation

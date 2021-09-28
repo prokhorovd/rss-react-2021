@@ -9,10 +9,10 @@ class App extends Component {
     this.state = {
       cards: [],
     };
-    this.formSubmit = this.formSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  formSubmit(event, cardData) {
+  handleSubmit(event, cardData) {
     this.setState({ cards: [...this.state.cards, cardData] });
     event.preventDefault();
   }
@@ -20,7 +20,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Form formSubmit={this.formSubmit} />
+        <Form onSubmit={this.handleSubmit} />
         <div className="card-field">
           {this.state.cards.map((item) => <Card key={item.uniqueID} card={item} />)}
         </div>
