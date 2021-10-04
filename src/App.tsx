@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import Counter from './components/Counter';
+import News from './components/News';
 
 const App = () => (
   <div>
-    <h1 className="heading">Hello World!</h1>
-    <Counter />
+    <h1 className="heading">News search engine</h1>
+    <News />
   </div>
 );
 

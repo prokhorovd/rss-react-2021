@@ -1,3 +1,32 @@
 .heading {
-    color: red;
+    color: indianred;
+}
+
+.articles-field {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.article {
+    padding: 10px;
+    margin: 10px;
+    width: 40vw;
+    background-color: #efefef;
+    box-shadow: black 1px 1px;
+    display: flex;
+    flex-direction: column;
+}
+
+.article__source {
+    margin: 0;
+}
+
+.article__content {
+    margin-top: 0;
+}
+
+.article__img {
+    height: 150px;
+    align-self: center;
 }
