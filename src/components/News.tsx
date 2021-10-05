@@ -63,8 +63,9 @@ function News() {
     }
   };
 
-  function generateID() {
-    const idNum = Math.floor(Math.random() * 1000000 + 1);
+  function generateID(date) {
+    // const idNum = Math.floor(Math.random() * 1000000 + 1);
+    const idNum = Date.parse(date);
     // console.log('generated id: ', idNum);
     return idNum;
   }
@@ -170,7 +171,7 @@ function News() {
         </div>
       </div>
       <div className="articles-field">
-        {articles.map((element) => <ArticleBox key={generateID()} data={element} />)}
+        {articles.map((element) => <ArticleBox key={generateID(element.publishedAt)} data={element} />)}
       </div>
     </div>
   );
