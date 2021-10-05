@@ -6,4 +6,5 @@ export interface Article {
   source: { id: string | null, name: string };
   title: string;
   urlToImage: string;
+  url: string;
 }

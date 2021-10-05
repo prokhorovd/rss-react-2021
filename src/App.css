@@ -30,3 +30,15 @@
     height: 150px;
     align-self: center;
 }
+
+.feed-controls {
+    display: flex;
+}
+
+.feed-controls__news-per-page,
+.feed-controls__sorting,
+.feed-controls__pagination {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}

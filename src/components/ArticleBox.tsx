@@ -5,7 +5,7 @@ function ArticleBox(props: { data: Article }) {
   const { data } = props;
   const {
     author,
-    content,
+    url,
     description,
     publishedAt,
     source,
@@ -22,7 +22,12 @@ function ArticleBox(props: { data: Article }) {
         {author}
       </p>
       <p>{date.toLocaleString()}</p>
-      <p className="article__content">{description}</p>
+      <p className="article__content">
+        {description}
+        <span>
+          <a href={url}> Read more</a>
+        </span>
+      </p>
       <img className="article__img" src={urlToImage} alt="news" />
     </div>
   );
