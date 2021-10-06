@@ -40,12 +40,12 @@ function News() {
     await refreshPageContent();
   };
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, type, value } = event.target;
+  const handleChange = (event: ChangeEvent<HTMLInputElement>, name?: string, param?: string | number) => {
+    const { type, value } = event.target;
     if (name === 'pageSize') {
-      setPageSize(Number(value));
+      setPageSize(Number(param as number));
     } else if (name === 'sortBy') {
-      setSortBy(value);
+      setSortBy(param as string);
     } else if (type === 'text') {
       setSearchValue(value);
     }
@@ -68,11 +68,6 @@ function News() {
     }
   }, [pageNum, pageSize, sortBy]);
 
-  function generateID(url: string) {
-    return url;
-    // return Math.floor(Math.random() * 1000000 + 1);
-  }
-
   return (
     <div className="page-wrap">
       <form className="search-form" onSubmit={handleSubmit}>
@@ -91,10 +86,8 @@ function News() {
             <input
               type="radio"
               id="show10"
-              name="pageSize"
-              value={10}
               checked={pageSize === 10}
-              onChange={handleChange}
+              onChange={(e) => handleChange(e, 'pageSize', 10)}
               disabled={isLoading}
             />
           </label>
@@ -103,10 +96,8 @@ function News() {
             <input
               type="radio"
               id="show20"
-              name="pageSize"
-              value={20}
               checked={pageSize === 20}
-              onChange={handleChange}
+              onChange={(e) => handleChange(e, 'pageSize', 20)}
               disabled={isLoading}
             />
           </label>
@@ -115,10 +106,8 @@ function News() {
             <input
               type="radio"
               id="show50"
-              name="pageSize"
-              value={50}
               checked={pageSize === 50}
-              onChange={handleChange}
+              onChange={(e) => handleChange(e, 'pageSize', 50)}
               disabled={isLoading}
             />
           </label>
@@ -130,10 +119,8 @@ function News() {
             <input
               type="radio"
               id="publishedAt"
-              name="sortBy"
-              value="publishedAt"
               checked={sortBy === 'publishedAt'}
-              onChange={handleChange}
+              onChange={(e) => handleChange(e, 'sortBy', 'publishedAt')}
               disabled={isLoading}
             />
           </label>
@@ -142,10 +129,8 @@ function News() {
             <input
               type="radio"
               id="relevancy"
-              name="sortBy"
-              value="relevancy"
               checked={sortBy === 'relevancy'}
-              onChange={handleChange}
+              onChange={(e) => handleChange(e, 'sortBy', 'relevancy')}
               disabled={isLoading}
             />
           </label>
@@ -154,10 +139,8 @@ function News() {
             <input
               type="radio"
               id="popularity"
-              name="sortBy"
-              value="popularity"
               checked={sortBy === 'popularity'}
-              onChange={handleChange}
+              onChange={(e) => handleChange(e, 'sortBy', 'popularity')}
             />
           </label>
         </div>
@@ -183,7 +166,7 @@ function News() {
         </div>
       </div>
       <div className="articles-field">
-        {articles.map((element) => <ArticleBox key={generateID(element.url)} data={element} />)}
+        {articles.map((element) => <ArticleBox key={element.url} data={element} />)}
       </div>
     </div>
   );
