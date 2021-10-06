@@ -42,3 +42,8 @@
     flex-direction: column;
     padding: 10px;
 }
+
+.feed-controls__pageNumber {
+    margin: 0 0 5px 0;
+    /*margin-bottom: 2px;*/
+}

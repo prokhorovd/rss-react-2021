@@ -1,4 +1,4 @@
-import React, { ChangeEvent, MouseEventHandler, useState } from 'react';
+import React, { ChangeEvent, MouseEventHandler, useEffect, useState } from 'react';
 import { Article } from '../types';
 import ArticleBox from './ArticleBox';
 
@@ -36,6 +36,7 @@ function News() {
 
   const handleSubmit = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setPageNum(1);
     await refreshPageContent();
   };
 
@@ -63,11 +64,19 @@ function News() {
     }
   };
 
-  function generateID(date) {
+  useEffect(() => {
+    if (searchValue !== '') {
+      refreshPageContent();
+    }
+  }, [pageNum, pageSize, sortBy]);
+
+  function generateID(url: string) {
+    return url;
     // const idNum = Math.floor(Math.random() * 1000000 + 1);
-    const idNum = Date.parse(date);
+    // return idNum;
+
+    // return Date.parse(date);
     // console.log('generated id: ', idNum);
-    return idNum;
   }
 
   return (
@@ -92,6 +101,7 @@ function News() {
               value={10}
               checked={pageSize === 10}
               onChange={handleChange}
+              disabled={isLoading}
             />
           </label>
           <label htmlFor="show20">
@@ -103,6 +113,7 @@ function News() {
               value={20}
               checked={pageSize === 20}
               onChange={handleChange}
+              disabled={isLoading}
             />
           </label>
           <label htmlFor="show50">
@@ -114,6 +125,7 @@ function News() {
               value={50}
               checked={pageSize === 50}
               onChange={handleChange}
+              disabled={isLoading}
             />
           </label>
         </div>
@@ -128,6 +140,7 @@ function News() {
               value="publishedAt"
               checked={sortBy === 'publishedAt'}
               onChange={handleChange}
+              disabled={isLoading}
             />
           </label>
           <label htmlFor="relevancy">
@@ -139,6 +152,7 @@ function News() {
               value="relevancy"
               checked={sortBy === 'relevancy'}
               onChange={handleChange}
+              disabled={isLoading}
             />
           </label>
           <label htmlFor="popularity">
@@ -154,6 +168,10 @@ function News() {
           </label>
         </div>
         <div className="feed-controls__pagination">
+          <p className="feed-controls__pageNumber">
+            Page:
+            {pageNum}
+          </p>
           <button
             onClick={handleClick}
             name="prev"
@@ -171,7 +189,7 @@ function News() {
         </div>
       </div>
       <div className="articles-field">
-        {articles.map((element) => <ArticleBox key={generateID(element.publishedAt)} data={element} />)}
+        {articles.map((element) => <ArticleBox key={generateID(element.url)} data={element} />)}
       </div>
     </div>
   );
