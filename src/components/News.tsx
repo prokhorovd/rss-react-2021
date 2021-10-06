@@ -40,14 +40,12 @@ function News() {
     await refreshPageContent();
   };
 
-  const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, type, value } = event.target;
     if (name === 'pageSize') {
       setPageSize(Number(value));
-      // await refreshPageContent();
     } else if (name === 'sortBy') {
       setSortBy(value);
-      // await refreshPageContent();
     } else if (type === 'text') {
       setSearchValue(value);
     }
@@ -72,11 +70,7 @@ function News() {
 
   function generateID(url: string) {
     return url;
-    // const idNum = Math.floor(Math.random() * 1000000 + 1);
-    // return idNum;
-
-    // return Date.parse(date);
-    // console.log('generated id: ', idNum);
+    // return Math.floor(Math.random() * 1000000 + 1);
   }
 
   return (
