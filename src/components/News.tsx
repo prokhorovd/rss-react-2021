@@ -1,4 +1,6 @@
-import React, { ChangeEvent, MouseEventHandler, useEffect, useState } from 'react';
+import React, {
+  ChangeEvent, MouseEventHandler, useEffect, useState,
+} from 'react';
 import { Article } from '../types';
 import ArticleBox from './ArticleBox';
 
@@ -40,7 +42,9 @@ function News() {
     await refreshPageContent();
   };
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>, name?: string, param?: string | number) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>,
+    name?: string,
+    param?: string | number) => {
     const { type, value } = event.target;
     if (name === 'pageSize') {
       setPageSize(Number(param as number));
@@ -68,6 +72,35 @@ function News() {
     }
   }, [pageNum, pageSize, sortBy]);
 
+  // 'News per page' params
+  const pageSizeInputs = [{ inputID: 'show10', inputName: '10', inputValue: 10 },
+    { inputID: 'show20', inputName: '20', inputValue: 20 },
+    { inputID: 'show30', inputName: '50', inputValue: 50 }];
+
+  // 'Sort news by' inputs params
+  const sortByInputs = [{ inputID: 'publishedAt', inputName: 'Date', inputValue: 'publishedAt' },
+    { inputID: 'relevancy', inputName: 'Relevancy', inputValue: 'relevancy' },
+    { inputID: 'popularity', inputName: 'Popularity', inputValue: 'popularity' }];
+
+  const renderPageSizeInput = (
+    inputID: string,
+    inputName: string,
+    inputValue: string | number,
+    stateName: string,
+    stateValue: string | number,
+  ) => (
+    <label htmlFor={inputID} key={inputValue}>
+      {inputName}
+      <input
+        type="radio"
+        id={inputID}
+        checked={stateValue === inputValue}
+        onChange={(e) => handleChange(e, stateName, inputValue)}
+        disabled={isLoading}
+      />
+    </label>
+  );
+
   return (
     <div className="page-wrap">
       <form className="search-form" onSubmit={handleSubmit}>
@@ -81,68 +114,23 @@ function News() {
       <div className="feed-controls">
         <div className="feed-controls__news-per-page">
           News per page:
-          <label htmlFor="show10">
-            10
-            <input
-              type="radio"
-              id="show10"
-              checked={pageSize === 10}
-              onChange={(e) => handleChange(e, 'pageSize', 10)}
-              disabled={isLoading}
-            />
-          </label>
-          <label htmlFor="show20">
-            20
-            <input
-              type="radio"
-              id="show20"
-              checked={pageSize === 20}
-              onChange={(e) => handleChange(e, 'pageSize', 20)}
-              disabled={isLoading}
-            />
-          </label>
-          <label htmlFor="show50">
-            50
-            <input
-              type="radio"
-              id="show50"
-              checked={pageSize === 50}
-              onChange={(e) => handleChange(e, 'pageSize', 50)}
-              disabled={isLoading}
-            />
-          </label>
+          {pageSizeInputs.map((element) => renderPageSizeInput(
+            element.inputID,
+            element.inputName,
+            element.inputValue,
+            'pageSize',
+            pageSize,
+          ))}
         </div>
         <div className="feed-controls__sorting">
           Sort news by:
-          <label htmlFor="publishedAt">
-            Date
-            <input
-              type="radio"
-              id="publishedAt"
-              checked={sortBy === 'publishedAt'}
-              onChange={(e) => handleChange(e, 'sortBy', 'publishedAt')}
-              disabled={isLoading}
-            />
-          </label>
-          <label htmlFor="relevancy">
-            Relevancy
-            <input
-              type="radio"
-              id="relevancy"
-              checked={sortBy === 'relevancy'}
-              onChange={(e) => handleChange(e, 'sortBy', 'relevancy')}
-              disabled={isLoading}
-            />
-          </label>
-          <label htmlFor="popularity">
-            Popularity
-            <input
-              type="radio"
-              id="popularity"
-              checked={sortBy === 'popularity'}
-              onChange={(e) => handleChange(e, 'sortBy', 'popularity')}
-            />
-          </label>
+          {sortByInputs.map((element) => renderPageSizeInput(
+            element.inputID,
+            element.inputName,
+            element.inputValue,
+            'sortBy',
+            sortBy,
+          ))}
         </div>
         <div className="feed-controls__pagination">
           <p className="feed-controls__pageNumber">
