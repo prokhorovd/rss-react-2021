@@ -42,17 +42,17 @@ function News() {
     await refreshPageContent();
   };
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>,
-    name?: string,
-    param?: string | number) => {
-    const { type, value } = event.target;
-    if (name === 'pageSize') {
-      setPageSize(Number(param as number));
-    } else if (name === 'sortBy') {
-      setSortBy(param as string);
-    } else if (type === 'text') {
-      setSearchValue(value);
-    }
+  const handleSearchValueChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setSearchValue(value);
+  };
+
+  const handlePageSizeChange = (value: number) => {
+    setPageSize(value);
+  };
+
+  const handleSortByChange = (value: string) => {
+    setSortBy(value);
   };
 
   const handleClick = async (event: MouseEventHandler<HTMLButtonElement>) => {
@@ -88,6 +88,7 @@ function News() {
     inputValue: string | number,
     stateName: string,
     stateValue: string | number,
+    handlerFunction, // : HandlePageSizeChange | HandleSortByChange,
   ) => (
     <label htmlFor={inputID} key={inputValue}>
       {inputName}
@@ -95,7 +96,7 @@ function News() {
         type="radio"
         id={inputID}
         checked={stateValue === inputValue}
-        onChange={(e) => handleChange(e, stateName, inputValue)}
+        onChange={() => handlerFunction(inputValue)}
         disabled={isLoading}
       />
     </label>
@@ -105,7 +106,7 @@ function News() {
     <div className="page-wrap">
       <form className="search-form" onSubmit={handleSubmit}>
         <label htmlFor="search">
-          <input id="search" type="text" placeholder="I'm looking for..." value={searchValue} onChange={handleChange} disabled={isLoading} />
+          <input id="search" type="text" placeholder="I'm looking for..." value={searchValue} onChange={handleSearchValueChange} disabled={isLoading} />
         </label>
         <button type="submit" disabled={isLoading}>
           {isLoading ? 'Loading...' : 'Search'}
@@ -120,6 +121,7 @@ function News() {
             element.inputValue,
             'pageSize',
             pageSize,
+            handlePageSizeChange,
           ))}
         </div>
         <div className="feed-controls__sorting">
@@ -130,6 +132,7 @@ function News() {
             element.inputValue,
             'sortBy',
             sortBy,
+            handleSortByChange,
           ))}
         </div>
         <div className="feed-controls__pagination">

@@ -8,3 +8,7 @@ export interface Article {
   urlToImage: string;
   url: string;
 }
+
+// export type HandlerFunction = (value: number | string) => void;
+// export type HandleSortByChange = (value: string) => void;
+// export type HandlePageSizeChange = (value: number) => void;
