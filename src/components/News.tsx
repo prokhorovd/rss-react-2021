@@ -11,6 +11,7 @@ function News() {
   const [pageSize, setPageSize] = useState<number>(10);
   const [sortBy, setSortBy] = useState<string>('publishedAt');
   const [pageNum, setPageNum] = useState<number>(1);
+  const [resultPages, setResultPages] = useState<number>(0);
 
   const refreshPageContent = async () => {
     setIsLoading(true);
@@ -21,14 +22,11 @@ function News() {
         + `&from=2021-10-02&sortBy=${sortBy}&apiKey=${apiKey}`
         + `&pageSize=${pageSize}&page=${pageNum}`;
       const req = new Request(address);
-      const result = await fetch(req)
-        .then((response) => response.json())
-        .then((data) => {
-          setIsLoading(false);
-          return data;
-        });
-      // console.log('result is: ', result.articles);
-      setArticles(result.articles);
+      const result = await fetch(req);
+      const data = await result.json();
+      console.log('data: ', data);
+      setArticles(data.articles);
+      setResultPages(Math.floor(data.totalResults / pageSize));
     } catch (e) {
       console.error('error has occurred: ', e);
     } finally {
@@ -139,6 +137,8 @@ function News() {
           <p className="feed-controls__pageNumber">
             Page:
             {pageNum}
+            {resultPages === 0 ? '' : (<span> of </span>)}
+            {resultPages === 0 ? '' : (resultPages)}
           </p>
           <button
             onClick={handleClick}
