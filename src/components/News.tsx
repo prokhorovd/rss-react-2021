@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import { Article } from '../types';
 import ArticleBox from './ArticleBox';
+import { pageSizeInputs, sortByInputs, apiKey } from '../data';
 
 function News() {
   const [searchValue, setSearchValue] = useState<string>('');
@@ -16,15 +17,13 @@ function News() {
   const refreshPageContent = async () => {
     setIsLoading(true);
     try {
-      // const apiKey = '00c5fceb74a64cee90041cb63724b62a';
-      const apiKey = 'f1eca3f7183846eea73575a543a71641'; // disposable mail
       const address = `https://newsapi.org/v2/everything?q=${searchValue}`
         + `&from=2021-10-02&sortBy=${sortBy}&apiKey=${apiKey}`
         + `&pageSize=${pageSize}&page=${pageNum}`;
       const req = new Request(address);
       const result = await fetch(req);
       const data = await result.json();
-      console.log('data: ', data);
+      // console.log('data: ', data);
       setArticles(data.articles);
       setResultPages(Math.floor(data.totalResults / pageSize));
     } catch (e) {
@@ -69,16 +68,6 @@ function News() {
       refreshPageContent();
     }
   }, [pageNum, pageSize, sortBy]);
-
-  // 'News per page' params
-  const pageSizeInputs = [{ inputID: 'show10', inputName: '10', inputValue: 10 },
-    { inputID: 'show20', inputName: '20', inputValue: 20 },
-    { inputID: 'show30', inputName: '50', inputValue: 50 }];
-
-  // 'Sort news by' inputs params
-  const sortByInputs = [{ inputID: 'publishedAt', inputName: 'Date', inputValue: 'publishedAt' },
-    { inputID: 'relevancy', inputName: 'Relevancy', inputValue: 'relevancy' },
-    { inputID: 'popularity', inputName: 'Popularity', inputValue: 'popularity' }];
 
   const renderPageSizeInput = (
     inputID: string,
