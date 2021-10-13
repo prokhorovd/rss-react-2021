@@ -36,6 +36,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '../build'),
     filename: 'bundle.js',
+    publicPath: '/',
   },
   plugins: [
     new HtmlWebpackPlugin({

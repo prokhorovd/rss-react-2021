@@ -9,5 +9,6 @@ module.exports = {
         arguments: ['--incognito'],
       }
     },
+    historyApiFallback: true,
   }
 }
