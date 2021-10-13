@@ -8,6 +8,25 @@ import {
 import News from './News';
 import About from './About';
 import Page404 from './Page404';
+import { useLocation } from 'react-router';
+
+function RenderNav() {
+  const location = useLocation();
+  const path = location.pathname;
+  console.log(location, typeof location, location.pathname);
+  return (
+    <nav>
+      <ul>
+        <li>
+          <Link className={path === '/' ? 'menu-link__active' : 'menu-link'} to="/">Home</Link>
+        </li>
+        <li>
+          <Link className={path === '/about' ? 'menu-link__active' : 'menu-link'} to="/about">About</Link>
+        </li>
+      </ul>
+    </nav>
+  );
+}
 
 function Header() {
   return (
@@ -16,12 +35,14 @@ function Header() {
         <div>
           <nav>
             <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/about">About</Link>
-              </li>
+              {/*<li style={location ? { color: 'red' } : { color: 'green' }}>*/}
+              {/*<li>*/}
+              {/*  <Link to="/">Home</Link>*/}
+              {/*</li>*/}
+              {/*<li>*/}
+              {/*  <Link to="/about">About</Link>*/}
+              {/*</li>*/}
+              <RenderNav />
             </ul>
           </nav>
         </div>
