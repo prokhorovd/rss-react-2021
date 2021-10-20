@@ -1,8 +1,9 @@
 import React from 'react';
-import { Article } from '../types';
+import { Link } from 'react-router-dom';
+import { Article, SearchParams } from '../types';
 
-function ArticleBox(props: { data: Article }) {
-  const { data } = props;
+function ArticleBox(props: { data: Article, searchParams: SearchParams }) {
+  const { data, searchParams } = props;
   const {
     author,
     url,
@@ -12,7 +13,15 @@ function ArticleBox(props: { data: Article }) {
     title,
     urlToImage,
   } = data;
+  const {
+    searchValue,
+    sortBy,
+  } = searchParams;
   const date = new Date(publishedAt);
+  const id = url
+    .split('')
+    .filter((char) => /:|\.|\/|%|-|\?/.test(char) ? '' : char)
+    .join('');
   return (
     <div className="article">
       <h3>{title}</h3>
@@ -29,6 +38,7 @@ function ArticleBox(props: { data: Article }) {
         </span>
       </p>
       <img className="article__img" src={urlToImage} alt="news" />
+      <Link to={`/details/searchValue=${searchValue}&sortBy=${sortBy}&id=${id}`}>Details</Link>
     </div>
   );
 }

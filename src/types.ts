@@ -7,6 +7,14 @@ export interface Article {
   title: string;
   urlToImage: string;
   url: string;
+  id: string;
+}
+
+export interface SearchParams {
+  searchValue: string;
+  pageSize: number;
+  sortBy: string;
+  pageNum: number;
 }
 
 // export type HandlerFunction = (value: number | string) => void;

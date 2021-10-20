@@ -3,6 +3,7 @@ import React from 'react';
 function About() {
   return (
     <div>
+      <h3>This is &apos;about&apos; page</h3>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit.
       Ut pretium facilisis porttitor. Nunc efficitur quis enim non cursus.
       Aliquam vel gravida nisi, et molestie nisi. Nam sagittis turpis ut malesuada pretium.

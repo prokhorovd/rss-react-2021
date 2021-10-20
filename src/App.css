@@ -27,7 +27,8 @@
 }
 
 .article__img {
-    height: 150px;
+    max-height: 150px;
+    max-width: 80%;
     align-self: center;
 }
 

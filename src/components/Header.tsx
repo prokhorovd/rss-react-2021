@@ -9,6 +9,7 @@ import { CSSTransition } from 'react-transition-group';
 import News from './News';
 import About from './About';
 import Page404 from './Page404';
+import Details from './Details';
 
 const routes = [
   { path: '/', name: 'News', Component: News },
@@ -38,7 +39,15 @@ function RenderNavigation() {
 
 function RenderContent() {
   const location = useLocation();
-  if (location.pathname !== '/' && location.pathname !== '/about') {
+  if (location.pathname.split('/')[1] === 'details') {
+    return (
+      <div>
+        <b>Element details:</b>
+        {'\n\n'}
+        <Details />
+      </div>
+    );
+  } if (location.pathname !== '/' && location.pathname !== '/about') {
     return (
       <div>
         <Page404 />

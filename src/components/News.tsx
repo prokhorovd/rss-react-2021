@@ -146,7 +146,17 @@ function News() {
         </div>
       </div>
       <div className="articles-field">
-        {articles.map((element) => <ArticleBox key={element.url} data={element} />)}
+        {articles.map((element) => (
+          <ArticleBox
+            key={element.url}
+            data={element}
+            searchParams={{
+              searchValue,
+              pageSize,
+              sortBy,
+              pageNum,
+            }}
+          />))}
       </div>
     </div>
   );
