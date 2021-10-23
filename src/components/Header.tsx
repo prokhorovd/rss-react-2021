@@ -8,7 +8,7 @@ import { useLocation } from 'react-router';
 import { CSSTransition } from 'react-transition-group';
 import News from './News';
 import About from './About';
-import PageNotFound from './PageNotFound';
+import NotFoundPage from './NotFoundPage';
 import Details from './Details';
 
 const routes = [
@@ -50,7 +50,7 @@ function RenderContent() {
   } if (location.pathname !== '/' && location.pathname !== '/about') {
     return (
       <div>
-        <PageNotFound />
+        <NotFoundPage />
       </div>
     );
   }
