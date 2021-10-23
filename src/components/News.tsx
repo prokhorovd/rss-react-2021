@@ -3,7 +3,8 @@ import React, {
 } from 'react';
 import { Article } from '../types';
 import ArticleBox from './ArticleBox';
-import { pageSizeInputs, sortByInputs, apiKey } from '../data';
+import { pageSizeInputs, sortByInputs } from '../data';
+import loadDataFromApi from '../helpers';
 
 function News() {
   const [searchValue, setSearchValue] = useState<string>('');
@@ -14,22 +15,18 @@ function News() {
   const [pageNum, setPageNum] = useState<number>(1);
   const [resultPages, setResultPages] = useState<number>(0);
 
+  const linkParameters = {
+    searchValue,
+    pageSize,
+    sortBy,
+    pageNum,
+  };
   const refreshPageContent = async () => {
     setIsLoading(true);
-    try {
-      const address = `https://newsapi.org/v2/everything?q=${searchValue}`
-        + `&from=2021-10-02&sortBy=${sortBy}&apiKey=${apiKey}`
-        + `&pageSize=${pageSize}&page=${pageNum}`;
-      const req = new Request(address);
-      const result = await fetch(req);
-      const data = await result.json();
-      setArticles(data.articles);
-      setResultPages(Math.floor(data.totalResults / pageSize));
-    } catch (e) {
-      console.error('error has occurred: ', e);
-    } finally {
-      setIsLoading(false);
-    }
+    const data = await loadDataFromApi(linkParameters);
+    setArticles(data.articles);
+    setResultPages(Math.floor(data.totalResults / pageSize));
+    setIsLoading(false);
   };
 
   const handleSubmit = async (event: ChangeEvent<HTMLFormElement>) => {
