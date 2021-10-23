@@ -39,10 +39,14 @@ const findArticle = (articles, articleId) => {
 function RenderArticleData(props) {
   const { data } = props;
   const key = data[0];
-  const value = (typeof data[1] === 'string')
-    ? data[1] : (typeof data[1] !== 'object')
-      ? 'null' : (data[1] === null)
-        ? 'null' : data[1].name;
+  let value = '';
+  if (typeof data[1] === 'string') {
+    value = data[1].toString();
+  } else if (typeof data[1] === 'object' && data[1] !== null) {
+    value = data[1].name;
+  } else {
+    value = 'null';
+  }
   return (
     <div>
       <b>
