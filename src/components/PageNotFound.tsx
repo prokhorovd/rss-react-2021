@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Page404() {
+function PageNotFound() {
   return (
     <div>
       Page not found
@@ -11,4 +11,4 @@ function Page404() {
   );
 }
 
-export default Page404;
+export default PageNotFound;
