@@ -19,7 +19,6 @@ const loadDataFromApi = async (linkParamsObj) => {
 
 // function return article object or object with title prop = 'not found';
 const findArticle = (articles, articleId) => {
-  const result = { title: 'Not found' };
   const filteredArticles = articles.filter((article) => {
     // transform url to id
     const id = article.url
@@ -32,7 +31,7 @@ const findArticle = (articles, articleId) => {
     }
   });
   if (filteredArticles.length === 0) {
-    return result;
+    return { title: 'Not found' };
   }
   return filteredArticles[0];
 };
