@@ -23,7 +23,6 @@ function News() {
       const req = new Request(address);
       const result = await fetch(req);
       const data = await result.json();
-      // console.log('data: ', data);
       setArticles(data.articles);
       setResultPages(Math.floor(data.totalResults / pageSize));
     } catch (e) {

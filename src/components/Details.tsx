@@ -69,7 +69,6 @@ function Details() {
   linkParamsStr.split('&').map((param) => {
     const key = param.split('=')[0];
     const value = param.split('=')[1];
-    // console.log(key, value);
     linkParamsObj[key] = value;
   });
   // get articles, found match, render info
