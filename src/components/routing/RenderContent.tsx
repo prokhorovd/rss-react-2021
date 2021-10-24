@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useLocation } from 'react-router';
 import { Route } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 import Details from '../Details';
 import NotFoundPage from '../NotFoundPage';
 
-function RenderContent(props) {
+interface RoutesListItem {
+  path: string,
+  name: string,
+  Component: FC,
+}
+type RoutesListType = RoutesListItem[];
+
+type RoutesListObj = {
+  routes: RoutesListType;
+};
+
+const RenderContent: FC<RoutesListObj> = (props: RoutesListObj) => {
   const { routes } = props;
   const location = useLocation();
-  if (location.pathname.split('/')[1] === 'details') {
+  const browserPath = location.pathname;
+  if (browserPath.split('/')[1] === 'details') {
     return (
       <div>
         <b>Element details:</b>
@@ -16,7 +28,7 @@ function RenderContent(props) {
         <Details />
       </div>
     );
-  } if (location.pathname !== '/' && location.pathname !== '/about') {
+  } if (browserPath !== '/' && browserPath !== '/about') {
     return (
       <div>
         <NotFoundPage />
@@ -41,6 +53,6 @@ function RenderContent(props) {
       </Route>
     ))
   );
-}
+};
 
 export default RenderContent;
