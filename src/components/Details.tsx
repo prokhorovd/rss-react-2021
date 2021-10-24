@@ -1,22 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
-// import { apiKey } from '../data';
 import loadDataFromApi from '../helpers';
-
-// const loadDataFromApi = async (linkParamsObj) => {
-//   const { searchValue, pageSize, sortBy } = linkParamsObj;
-//   try {
-//     const address = `https://newsapi.org/v2/everything?q=${searchValue}`
-//       + `&from=2021-10-02&sortBy=${sortBy}&apiKey=${apiKey}`
-//       + `&pageSize=${pageSize}`;
-//     const req = new Request(address);
-//     const result = await fetch(req);
-//     const data = await result.json();
-//     return data;
-//   } catch (e) {
-//     console.error('error has occurred: ', e);
-//   }
-// };
 
 // function return article object or object with title prop = 'not found';
 const findArticle = (articles, articleId) => {
