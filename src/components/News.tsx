@@ -65,25 +65,35 @@ function News() {
     }
   }, [pageNum, pageSize, sortBy]);
 
-  const renderPageSizeInput = (
+  type InputParams = {
     inputID: string,
     inputName: string,
     inputValue: string | number,
-    stateName: string,
     stateValue: string | number,
-    handlerFunction, // : HandlePageSizeChange | HandleSortByChange,
-  ) => (
-    <label htmlFor={inputID} key={inputValue}>
-      {inputName}
-      <input
-        type="radio"
-        id={inputID}
-        checked={stateValue === inputValue}
-        onChange={() => handlerFunction(inputValue)}
-        disabled={isLoading}
-      />
-    </label>
-  );
+    handlerFunction,
+  };
+
+  const renderPageSizeInput = (params: InputParams) => {
+    const {
+      inputID,
+      inputName,
+      inputValue,
+      stateValue,
+      handlerFunction,
+    } = params;
+    return (
+      <label htmlFor={inputID} key={inputValue}>
+        {inputName}
+        <input
+          type="radio"
+          id={inputID}
+          checked={stateValue === inputValue}
+          onChange={() => handlerFunction(inputValue)}
+          disabled={isLoading}
+        />
+      </label>
+    );
+  };
 
   return (
     <div className="page-wrap">
@@ -98,25 +108,31 @@ function News() {
       <div className="feed-controls">
         <div className="feed-controls__news-per-page">
           News per page:
-          {pageSizeInputs.map((element) => renderPageSizeInput(
-            element.inputID,
-            element.inputName,
-            element.inputValue,
-            'pageSize',
-            pageSize,
-            handlePageSizeChange,
-          ))}
+          {pageSizeInputs.map((element) => {
+            const params = {
+              inputID: element.inputID,
+              inputName: element.inputName,
+              inputValue: element.inputValue,
+              stateName: 'pageSize',
+              stateValue: pageSize,
+              handlerFunction: handlePageSizeChange,
+            };
+            return renderPageSizeInput(params);
+          })}
         </div>
         <div className="feed-controls__sorting">
           Sort news by:
-          {sortByInputs.map((element) => renderPageSizeInput(
-            element.inputID,
-            element.inputName,
-            element.inputValue,
-            'sortBy',
-            sortBy,
-            handleSortByChange,
-          ))}
+          {sortByInputs.map((element) => {
+            const params = {
+              inputID: element.inputID,
+              inputName: element.inputName,
+              inputValue: element.inputValue,
+              stateName: 'sortBy',
+              stateValue: sortBy,
+              handlerFunction: handleSortByChange,
+            };
+            return renderPageSizeInput(params);
+          })}
         </div>
         <div className="feed-controls__pagination">
           <p className="feed-controls__pageNumber">
@@ -152,7 +168,8 @@ function News() {
               sortBy,
               pageNum,
             }}
-          />))}
+          />
+        ))}
       </div>
     </div>
   );
