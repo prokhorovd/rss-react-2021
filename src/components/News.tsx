@@ -23,9 +23,11 @@ function News() {
   };
   const refreshPageContent = async () => {
     setIsLoading(true);
-    const data = await loadDataFromApi(linkParameters);
-    setArticles(data.articles);
-    setResultPages(Math.floor(data.totalResults / pageSize));
+    if (searchValue !== '') {
+      const data = await loadDataFromApi(linkParameters);
+      setArticles(data.articles);
+      setResultPages(Math.floor(data.totalResults / pageSize));
+    }
     setIsLoading(false);
   };
 
@@ -60,9 +62,7 @@ function News() {
   };
 
   useEffect(() => {
-    if (searchValue !== '') {
-      refreshPageContent();
-    }
+    refreshPageContent();
   }, [pageNum, pageSize, sortBy]);
 
   type InputParams = {
