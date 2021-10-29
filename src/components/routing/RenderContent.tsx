@@ -10,13 +10,12 @@ interface RoutesListItem {
   name: string,
   Component: FC,
 }
-type RoutesListType = RoutesListItem[];
 
-type RoutesListObj = {
-  routes: RoutesListType;
-};
+interface Props {
+  routes: RoutesListItem[];
+}
 
-const RenderContent: FC<RoutesListObj> = (props: RoutesListObj) => {
+const RenderContent: FC<Props> = (props) => {
   const { routes } = props;
   const location = useLocation();
   const browserPath = location.pathname;

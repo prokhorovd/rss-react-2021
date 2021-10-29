@@ -1,5 +1,5 @@
 import React, {
-  ChangeEvent, MouseEventHandler, useEffect, useState,
+  ChangeEvent, MouseEventHandler, useCallback, useEffect, useState,
 } from 'react';
 import { Article } from '../types';
 import ArticleBox from './ArticleBox';
@@ -8,38 +8,39 @@ import loadDataFromApi from '../helpers';
 
 function News() {
   const [searchValue, setSearchValue] = useState<string>('');
+  const [searchFieldValue, setSearchFieldValue] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [articles, setArticles] = useState<Article[]>([]);
+  const [searchResultsCounter, setSearchResultsCounter] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(10);
   const [sortBy, setSortBy] = useState<string>('publishedAt');
   const [pageNum, setPageNum] = useState<number>(1);
   const [resultPages, setResultPages] = useState<number>(0);
 
-  const linkParameters = {
-    searchValue,
-    pageSize,
-    sortBy,
-    pageNum,
-  };
-  const refreshPageContent = async () => {
-    if (searchValue !== '') {
-      setIsLoading(true);
-      const data = await loadDataFromApi(linkParameters);
-      setArticles(data.articles);
-      setResultPages(Math.floor(data.totalResults / pageSize));
-      setIsLoading(false);
-    }
-  };
+  const updatePageContent = useCallback(async () => {
+    setIsLoading(true);
+    const data = await loadDataFromApi({
+      searchValue,
+      pageNum,
+      pageSize,
+      sortBy,
+    });
+    setArticles(data.articles);
+    setSearchResultsCounter(data.totalResults);
+    setResultPages(Math.floor(data.totalResults / pageSize));
+    setIsLoading(false);
+  }, [searchValue, pageNum, pageSize, sortBy]);
 
   const handleSubmit = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     setPageNum(1);
-    await refreshPageContent();
+    setSearchValue(searchFieldValue);
+    await updatePageContent();
   };
 
   const handleSearchValueChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
-    setSearchValue(value);
+    setSearchFieldValue(value);
   };
 
   const handlePageSizeChange = (value: number) => {
@@ -54,16 +55,16 @@ function News() {
     const { name } = event.target;
     if (name === 'prev') {
       setPageNum((currentPageNumber) => currentPageNumber - 1);
-      await refreshPageContent();
+      await updatePageContent();
     } else if (name === 'next') {
       setPageNum((currentPageNumber) => currentPageNumber + 1);
-      await refreshPageContent();
+      await updatePageContent();
     }
   };
 
   useEffect(() => {
-    refreshPageContent();
-  }, [pageNum, pageSize, sortBy]);
+    updatePageContent();
+  }, [updatePageContent]);
 
   type InputParams = {
     inputID: string,
@@ -99,7 +100,14 @@ function News() {
     <div className="page-wrap">
       <form className="search-form" onSubmit={handleSubmit}>
         <label htmlFor="search">
-          <input id="search" type="text" placeholder="I'm looking for..." value={searchValue} onChange={handleSearchValueChange} disabled={isLoading} />
+          <input
+            id="search"
+            type="text"
+            placeholder="I'm looking for..."
+            value={searchFieldValue}
+            onChange={handleSearchValueChange}
+            disabled={isLoading}
+          />
         </label>
         <button type="submit" disabled={isLoading}>
           {isLoading ? 'Loading...' : 'Search'}
@@ -151,7 +159,13 @@ function News() {
           <button
             onClick={handleClick}
             name="next"
-            disabled={articles === undefined || articles.length === 0 || isLoading}
+            disabled={
+              articles === undefined
+              || articles.length === 0
+              || articles.length === 1
+              || searchResultsCounter === 0
+              || isLoading
+            }
           >
             Next page
           </button>
@@ -162,6 +176,7 @@ function News() {
           <ArticleBox
             key={element.url}
             data={element}
+            totalResults={searchResultsCounter}
             searchParams={{
               searchValue,
               pageSize,

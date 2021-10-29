@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Article, SearchParams } from '../types';
 
-function ArticleBox(props: { data: Article, searchParams: SearchParams }) {
-  const { data, searchParams } = props;
+function ArticleBox(props: { data: Article, searchParams: SearchParams, totalResults: number }) {
+  const { data, searchParams, totalResults } = props;
   const {
     author,
     url,
@@ -22,6 +22,13 @@ function ArticleBox(props: { data: Article, searchParams: SearchParams }) {
     .split('')
     .filter((char) => /:|\.|\/|%|-|\?/.test(char) ? '' : char)
     .join('');
+  if ((searchValue === '' || source.name === 'snf') && totalResults === 0) {
+    return (
+      <div className="article">
+        <p>please provide search value</p>
+      </div>
+    );
+  }
   return (
     <div className="article">
       <h3>{title}</h3>
