@@ -1,6 +1,6 @@
 import { apiKey } from './data';
 
-interface Args {
+export interface Args {
   searchValue: string,
   pageSize: number,
   sortBy: string,
@@ -17,7 +17,7 @@ const loadDataFromApi = async (args: Args) => {
   try {
     if (searchValue !== '') {
       let address = `https://newsapi.org/v2/everything?q=${searchValue}`
-        + `&from=2021-10-02&sortBy=${sortBy}&apiKey=${apiKey}`
+        + `&from=2021-10-15&sortBy=${sortBy}&apiKey=${apiKey}`
         + `&pageSize=${pageSize}`;
       if (pageNum !== undefined) {
         address += `&page=${pageNum}`;
@@ -31,11 +31,7 @@ const loadDataFromApi = async (args: Args) => {
   }
   return {
     totalResults: 0,
-    articles: [{
-      title: 'request is empty',
-      url: 'this value used as unique id',
-      source: { id: null, name: 'snf' },
-    }],
+    articles: [],
   };
 };
 

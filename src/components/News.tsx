@@ -1,41 +1,35 @@
 import React, {
-  ChangeEvent, MouseEventHandler, useCallback, useEffect, useState,
+  ChangeEvent, MouseEventHandler, useState,
 } from 'react';
-import { Article } from '../types';
-import ArticleBox from './ArticleBox';
+import { useDispatch, useSelector } from 'react-redux';
 import { pageSizeInputs, sortByInputs } from '../data';
-import loadDataFromApi from '../helpers';
+import {
+  selectFeedParameters,
+  setPageSizeS,
+  setSortByS,
+  setPageNumS,
+  setSearchValueS,
+  requestFeedFromAPI,
+} from '../features/feedParameters/feedParametersSlice';
+import Feed from '../features/feedParameters/Feed';
 
 function News() {
-  const [searchValue, setSearchValue] = useState<string>('');
+  const feedParameters = useSelector(selectFeedParameters);
+  const dispatch = useDispatch();
   const [searchFieldValue, setSearchFieldValue] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [searchResultsCounter, setSearchResultsCounter] = useState<number>(0);
-  const [pageSize, setPageSize] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>('publishedAt');
-  const [pageNum, setPageNum] = useState<number>(1);
-  const [resultPages, setResultPages] = useState<number>(0);
-
-  const updatePageContent = useCallback(async () => {
-    setIsLoading(true);
-    const data = await loadDataFromApi({
-      searchValue,
-      pageNum,
-      pageSize,
-      sortBy,
-    });
-    setArticles(data.articles);
-    setSearchResultsCounter(data.totalResults);
-    setResultPages(Math.floor(data.totalResults / pageSize));
-    setIsLoading(false);
-  }, [searchValue, pageNum, pageSize, sortBy]);
 
   const handleSubmit = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setPageNum(1);
-    setSearchValue(searchFieldValue);
-    await updatePageContent();
+    dispatch(setSearchValueS(searchFieldValue));
+    dispatch(setPageNumS(1));
+    // console.log('will search with searchValue: ', searchFieldValue, feedParameters.searchValue);
+    // console.log('current args: ', feedParameters);
+    const linkArgs = {
+      ...feedParameters,
+      searchValue: searchFieldValue,
+      pageNum: 1,
+    };
+    dispatch(requestFeedFromAPI(linkArgs));
   };
 
   const handleSearchValueChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -44,27 +38,47 @@ function News() {
   };
 
   const handlePageSizeChange = (value: number) => {
-    setPageSize(value);
+    dispatch(setPageSizeS(value));
+    dispatch(setPageNumS(1));
+    const linkArgs = {
+      ...feedParameters,
+      pageSize: value,
+      pageNum: 1,
+    };
+    dispatch(requestFeedFromAPI(linkArgs));
   };
 
   const handleSortByChange = (value: string) => {
-    setSortBy(value);
+    dispatch(setSortByS(value));
+    dispatch(setPageNumS(1));
+    const linkArgs = {
+      ...feedParameters,
+      sortBy: value,
+      pageNum: 1,
+    };
+    dispatch(requestFeedFromAPI(linkArgs));
   };
 
-  const handleClick = async (event: MouseEventHandler<HTMLButtonElement>) => {
+  const handleClickS = async (event: MouseEventHandler<HTMLButtonElement>) => {
     const { name } = event.target;
     if (name === 'prev') {
-      setPageNum((currentPageNumber) => currentPageNumber - 1);
-      await updatePageContent();
+      const newPageNum = feedParameters.pageNum - 1;
+      dispatch(setPageNumS(newPageNum));
+      const linkArgs = {
+        ...feedParameters,
+        pageNum: newPageNum,
+      };
+      dispatch(requestFeedFromAPI(linkArgs));
     } else if (name === 'next') {
-      setPageNum((currentPageNumber) => currentPageNumber + 1);
-      await updatePageContent();
+      const newPageNum = feedParameters.pageNum + 1;
+      dispatch(setPageNumS(newPageNum));
+      const linkArgs = {
+        ...feedParameters,
+        pageNum: newPageNum,
+      };
+      dispatch(requestFeedFromAPI(linkArgs));
     }
   };
-
-  useEffect(() => {
-    updatePageContent();
-  }, [updatePageContent]);
 
   type InputParams = {
     inputID: string,
@@ -90,7 +104,7 @@ function News() {
           id={inputID}
           checked={stateValue === inputValue}
           onChange={() => handlerFunction(inputValue)}
-          disabled={isLoading}
+          disabled={feedParameters.status === 'loading'}
         />
       </label>
     );
@@ -106,11 +120,11 @@ function News() {
             placeholder="I'm looking for..."
             value={searchFieldValue}
             onChange={handleSearchValueChange}
-            disabled={isLoading}
+            disabled={feedParameters.status === 'loading'}
           />
         </label>
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? 'Loading...' : 'Search'}
+        <button type="submit" disabled={feedParameters.status === 'loading'}>
+          {feedParameters.status === 'loading' ? 'Loading...' : 'Search'}
         </button>
       </form>
       <div className="feed-controls">
@@ -122,7 +136,7 @@ function News() {
               inputName: element.inputName,
               inputValue: element.inputValue,
               stateName: 'pageSize',
-              stateValue: pageSize,
+              stateValue: feedParameters.pageSize,
               handlerFunction: handlePageSizeChange,
             };
             return renderPageSizeInput(params);
@@ -136,7 +150,7 @@ function News() {
               inputName: element.inputName,
               inputValue: element.inputValue,
               stateName: 'sortBy',
-              stateValue: sortBy,
+              stateValue: feedParameters.sortBy,
               handlerFunction: handleSortByChange,
             };
             return renderPageSizeInput(params);
@@ -145,47 +159,33 @@ function News() {
         <div className="feed-controls__pagination">
           <p className="feed-controls__pageNumber">
             Page:
-            {pageNum}
-            {resultPages === 0 ? '' : (<span> of </span>)}
-            {resultPages === 0 ? '' : (resultPages)}
+            {feedParameters.pageNum}
+            {feedParameters.feed.totalResults === 0 ? '' : (<span> of </span>)}
+            {feedParameters.feed.totalResults === 0 ? '' : (Math.floor(feedParameters.feed.totalResults / feedParameters.pageSize))}
           </p>
           <button
-            onClick={handleClick}
+            onClick={handleClickS}
             name="prev"
-            disabled={pageNum === 1 || isLoading}
+            disabled={feedParameters.pageNum === 1 || feedParameters.status === 'loading'}
           >
             Previous page
           </button>
           <button
-            onClick={handleClick}
+            onClick={handleClickS}
             name="next"
             disabled={
-              articles === undefined
-              || articles.length === 0
-              || articles.length === 1
-              || searchResultsCounter === 0
-              || isLoading
+              feedParameters.feed.articles === undefined
+              || feedParameters.feed.articles.length === 0
+              || feedParameters.feed.articles.length === 1
+              || feedParameters.totalResults === 0
+              || feedParameters.status === 'loading'
             }
           >
             Next page
           </button>
         </div>
       </div>
-      <div className="articles-field">
-        {articles.map((element) => (
-          <ArticleBox
-            key={element.url}
-            data={element}
-            totalResults={searchResultsCounter}
-            searchParams={{
-              searchValue,
-              pageSize,
-              sortBy,
-              pageNum,
-            }}
-          />
-        ))}
-      </div>
+      <Feed />
     </div>
   );
 }
