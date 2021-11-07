@@ -14,14 +14,14 @@ const initialState = {
 };
 
 export const requestFeedFromAPI = createAsyncThunk(
-  'feedParameters/fetchFeed',
+  'feed/fetchFeed',
   async (arg: Args) => {
     const response = await loadDataFromApi(arg);
     return response;
   },
 );
 
-export const feedParametersSlice = createSlice({
+export const feedSlice = createSlice({
   name: 'feedParameters',
   initialState,
   reducers: {
@@ -76,8 +76,8 @@ export const feedParametersSlice = createSlice({
 
 export const {
   setSearchValueS, setPageSizeS, setSortByS, setPageNumS,
-} = feedParametersSlice.actions;
+} = feedSlice.actions;
 
 export const selectFeedParameters = (state) => state.feedParameters;
 
-export default feedParametersSlice.reducer;
+export default feedSlice.reducer;

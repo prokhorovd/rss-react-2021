@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectFeedParameters } from './feedParametersSlice';
+import { selectFeedParameters } from './feedSlice';
 import ArticleBox from '../../components/ArticleBox';
 
 function Feed() {

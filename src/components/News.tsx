@@ -10,8 +10,8 @@ import {
   setPageNumS,
   setSearchValueS,
   requestFeedFromAPI,
-} from '../features/feedParameters/feedParametersSlice';
-import Feed from '../features/feedParameters/Feed';
+} from '../features/feed/feedSlice';
+import Feed from '../features/feed/Feed';
 
 function News() {
   const feedParameters = useSelector(selectFeedParameters);
@@ -22,8 +22,8 @@ function News() {
     event.preventDefault();
     dispatch(setSearchValueS(searchFieldValue));
     dispatch(setPageNumS(1));
-    // console.log('will search with searchValue: ', searchFieldValue, feedParameters.searchValue);
-    // console.log('current args: ', feedParameters);
+    // console.log('will search with searchValue: ', searchFieldValue, feed.searchValue);
+    // console.log('current args: ', feed);
     const linkArgs = {
       ...feedParameters,
       searchValue: searchFieldValue,

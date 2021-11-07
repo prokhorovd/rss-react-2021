@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectFeedParameters, setPageSizeS } from '../features/feedParameters/feedParametersSlice';
+import { selectFeedParameters, setPageSizeS } from '../features/feed/feedSlice';
 
 function About() {
   // store test
   const feedParameters = useSelector(selectFeedParameters);
   const dispatch = useDispatch();
-  // console.log(feedParameters);
+  // console.log(feed);
   return (
     <div>
       <h3>This is &apos;about&apos; page</h3>
