@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useLocation } from 'react-router';
 import loadDataFromApi, { Args } from '../helpers';
 import Article, { ArticleInfo } from './Article';
 
 function useQuery() {
   const { search } = useLocation();
-  return React.useMemo(() => new URLSearchParams(search), [search]);
+  return useMemo(() => new URLSearchParams(search), [search]);
 }
 
 interface ArticleItem1 {
@@ -20,7 +20,7 @@ interface ArticleItem1 {
 }
 
 // function return article object or object with title prop = 'not found';
-const findArticle = (articles: ArticleItem1[], articleId: string | undefined) => {
+const findArticle = (articles: ArticleItem1[], articleId: string | undefined | null) => {
   const filteredArticles = articles.filter((article) => {
     // transform url to id
     const id = article.url
@@ -41,19 +41,13 @@ const findArticle = (articles: ArticleItem1[], articleId: string | undefined) =>
 
 function Details() {
   const [result, setResult] = useState<ArticleInfo | null>(null);
-  // START REFACTOR
   // get params from link
-  const linkParams: Args = {
-    searchValue: '',
-    pageSize: 100,
-    sortBy: 'publishedAt',
-    id: '',
-  };
   const query = useQuery();
-  const queryParams = ['searchValue', 'sortBy', 'id'];
-  queryParams.forEach((element) => {
-    linkParams[element] = query.get(element);
-  });
+  const linkParams: Args = {
+    searchValue: query.get('searchValue'),
+    sortBy: query.get('sortBy'),
+    id: query.get('id'),
+  };
   // request news and look for match
   const getResult = async () => {
     // get last 100 news from api

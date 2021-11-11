@@ -1,17 +1,17 @@
 import { apiKey } from './data';
 
 export interface Args {
-  searchValue: string,
-  pageSize: number,
-  sortBy: string,
+  searchValue: string | null,
+  pageSize?: number,
+  sortBy: string | null,
   pageNum?: number,
-  id?: string
+  id?: string | null,
 }
 
 const loadDataFromApi = async (args: Args) => {
   const {
     searchValue,
-    pageSize,
+    pageSize = 100,
     sortBy,
     pageNum,
   } = args;
