@@ -1,16 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import loadDataFromApi, { Args } from '../../helpers';
 
-enum sortNewsOptions {
-  time = 'publishedAt',
-  relation = 'relevancy',
-  popularity = 'popularity',
+enum SortNewsOptions {
+  PublishedAt = 'publishedAt',
+  Relevancy = 'relevancy',
+  Popularity = 'popularity',
 }
 
 const initialState = {
   searchValue: '',
   pageSize: 10,
-  sortBy: sortNewsOptions.time,
+  sortBy: SortNewsOptions.PublishedAt,
   pageNum: 1,
   isLoading: false,
   feed: {
