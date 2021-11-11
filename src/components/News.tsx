@@ -1,5 +1,5 @@
 import React, {
-  ChangeEvent, MouseEventHandler, useState,
+  ChangeEvent, useState,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { pageSizeInputs, sortByInputs } from '../data';
@@ -57,25 +57,24 @@ function News() {
     dispatch(requestFeedFromAPI(linkArgs));
   };
 
-  const handleClick = async (event: MouseEventHandler<HTMLButtonElement>) => {
-    const { name } = event.target;
-    if (name === 'prev') {
-      const newPageNum = feedParameters.pageNum - 1;
-      dispatch(setPageNum(newPageNum));
-      const linkArgs = {
-        ...feedParameters,
-        pageNum: newPageNum,
-      };
-      dispatch(requestFeedFromAPI(linkArgs));
-    } else if (name === 'next') {
-      const newPageNum = feedParameters.pageNum + 1;
-      dispatch(setPageNum(newPageNum));
-      const linkArgs = {
-        ...feedParameters,
-        pageNum: newPageNum,
-      };
-      dispatch(requestFeedFromAPI(linkArgs));
-    }
+  const handleClickPrevPage = async () => {
+    const newPageNum = feedParameters.pageNum - 1;
+    dispatch(setPageNum(newPageNum));
+    const linkArgs = {
+      ...feedParameters,
+      pageNum: newPageNum,
+    };
+    dispatch(requestFeedFromAPI(linkArgs));
+  };
+
+  const handleClickNextPage = async () => {
+    const newPageNum = feedParameters.pageNum + 1;
+    dispatch(setPageNum(newPageNum));
+    const linkArgs = {
+      ...feedParameters,
+      pageNum: newPageNum,
+    };
+    dispatch(requestFeedFromAPI(linkArgs));
   };
 
   interface InputParams {
@@ -160,14 +159,14 @@ function News() {
             {feedParameters.feed.totalResults === 0 ? '' : (Math.floor(feedParameters.feed.totalResults / feedParameters.pageSize))}
           </p>
           <button
-            onClick={handleClick}
+            onClick={handleClickPrevPage}
             name="prev"
             disabled={feedParameters.pageNum === 1 || feedParameters.isLoading}
           >
             Previous page
           </button>
           <button
-            onClick={handleClick}
+            onClick={handleClickNextPage}
             name="next"
             disabled={
               !feedParameters.feed.articles

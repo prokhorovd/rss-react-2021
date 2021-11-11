@@ -8,7 +8,7 @@ function useQuery() {
   return useMemo(() => new URLSearchParams(search), [search]);
 }
 
-interface ArticleItem1 {
+interface ArticleItem {
   title: string,
   author: string,
   description: string,
@@ -20,7 +20,7 @@ interface ArticleItem1 {
 }
 
 // function return article object or object with title prop = 'not found';
-const findArticle = (articles: ArticleItem1[], articleId: string | undefined | null) => {
+const findArticle = (articles: ArticleItem[], articleId: string | undefined | null) => {
   const filteredArticles = articles.filter((article) => {
     // transform url to id
     const id = article.url
