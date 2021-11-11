@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { pageSizeInputs, sortByInputs } from '../data';
 import {
   selectFeedParameters,
-  setPageSizeS,
-  setSortByS,
-  setPageNumS,
-  setSearchValueS,
+  setPageSize,
+  setSortBy,
+  setPageNum,
+  setSearchValue,
   requestFeedFromAPI,
 } from '../features/feed/feedSlice';
 import Feed from '../features/feed/Feed';
@@ -20,10 +20,8 @@ function News() {
 
   const handleSubmit = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(setSearchValueS(searchFieldValue));
-    dispatch(setPageNumS(1));
-    // console.log('will search with searchValue: ', searchFieldValue, feed.searchValue);
-    // console.log('current args: ', feed);
+    dispatch(setSearchValue(searchFieldValue));
+    dispatch(setPageNum(1));
     const linkArgs = {
       ...feedParameters,
       searchValue: searchFieldValue,
@@ -38,8 +36,8 @@ function News() {
   };
 
   const handlePageSizeChange = (value: number) => {
-    dispatch(setPageSizeS(value));
-    dispatch(setPageNumS(1));
+    dispatch(setPageSize(value));
+    dispatch(setPageNum(1));
     const linkArgs = {
       ...feedParameters,
       pageSize: value,
@@ -49,8 +47,8 @@ function News() {
   };
 
   const handleSortByChange = (value: string) => {
-    dispatch(setSortByS(value));
-    dispatch(setPageNumS(1));
+    dispatch(setSortBy(value));
+    dispatch(setPageNum(1));
     const linkArgs = {
       ...feedParameters,
       sortBy: value,
@@ -63,7 +61,7 @@ function News() {
     const { name } = event.target;
     if (name === 'prev') {
       const newPageNum = feedParameters.pageNum - 1;
-      dispatch(setPageNumS(newPageNum));
+      dispatch(setPageNum(newPageNum));
       const linkArgs = {
         ...feedParameters,
         pageNum: newPageNum,
@@ -71,7 +69,7 @@ function News() {
       dispatch(requestFeedFromAPI(linkArgs));
     } else if (name === 'next') {
       const newPageNum = feedParameters.pageNum + 1;
-      dispatch(setPageNumS(newPageNum));
+      dispatch(setPageNum(newPageNum));
       const linkArgs = {
         ...feedParameters,
         pageNum: newPageNum,

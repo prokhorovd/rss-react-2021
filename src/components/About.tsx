@@ -1,12 +1,6 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectFeedParameters, setPageSizeS } from '../features/feed/feedSlice';
 
 function About() {
-  // store test
-  const feedParameters = useSelector(selectFeedParameters);
-  const dispatch = useDispatch();
-  // console.log(feed);
   return (
     <div>
       <h3>This is &apos;about&apos; page</h3>
@@ -19,12 +13,6 @@ function About() {
         Aenean tempus gravida nulla, eget cursus augue accumsan id.
         Aliquam in tempor mi, a sagittis quam.
       </p>
-      <p>
-        Pagesize:
-        {feedParameters.pageSize}
-      </p>
-      <button onClick={() => dispatch(setPageSizeS(10))}>setFeedParams to 10</button>
-      <button onClick={() => dispatch(setPageSizeS(20))}>setFeedParams to 20</button>
     </div>
   );
 }

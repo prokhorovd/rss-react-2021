@@ -16,7 +16,6 @@ interface Props {
 }
 
 function objFlatter(obj: {[index: string]:any}, prefix = ''): object {
-  console.log(obj);
   const result: {[index: string]:any} = {};
   const keys = Object.keys(obj);
   keys.forEach((key) => {

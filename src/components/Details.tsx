@@ -65,7 +65,6 @@ function Details() {
   if (!result) {
     getResult();
   }
-  // console.log(result);
   if (!!result && result.title === 'Not found') {
     return (
       <div>

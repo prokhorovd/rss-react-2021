@@ -25,25 +25,25 @@ export const feedSlice = createSlice({
   name: 'feedParameters',
   initialState,
   reducers: {
-    setSearchValueS: (state, action) => {
+    setSearchValue: (state, action) => {
       return {
         ...state,
         searchValue: action.payload,
       };
     },
-    setPageSizeS: (state, action) => {
+    setPageSize: (state, action) => {
       return {
         ...state,
         pageSize: action.payload,
       };
     },
-    setSortByS: (state, action) => {
+    setSortBy: (state, action) => {
       return {
         ...state,
         sortBy: action.payload,
       };
     },
-    setPageNumS: (state, action) => {
+    setPageNum: (state, action) => {
       return {
         ...state,
         pageNum: action.payload,
@@ -75,7 +75,7 @@ export const feedSlice = createSlice({
 });
 
 export const {
-  setSearchValueS, setPageSizeS, setSortByS, setPageNumS,
+  setSearchValue, setPageSize, setSortBy, setPageNum,
 } = feedSlice.actions;
 
 export const selectFeedParameters = (state) => state.feedParameters;
