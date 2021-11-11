@@ -22,7 +22,7 @@ function ArticleBox(props: { data: Article, searchParams: SearchParams, totalRes
     .split('')
     .filter((char) => (/:|\.|\/|%|-|\?/.test(char) ? '' : char))
     .join('');
-  if ((searchValue === '' || source.name === 'snf') && totalResults === 0) {
+  if ((!!searchValue || source.name === 'snf') && totalResults === 0) {
     return (
       <div className="article">
         <p>please provide search value!!</p>

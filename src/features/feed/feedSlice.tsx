@@ -6,7 +6,7 @@ const initialState = {
   pageSize: 10,
   sortBy: 'publishedAt',
   pageNum: 1,
-  status: 'idle',
+  isLoading: false,
   feed: {
     totalResults: 0,
     articles: [],
@@ -55,20 +55,20 @@ export const feedSlice = createSlice({
       .addCase(requestFeedFromAPI.pending, (state) => {
         return {
           ...state,
-          status: 'loading',
+          isLoading: true,
         };
       })
       .addCase(requestFeedFromAPI.fulfilled, (state, action) => {
         return {
           ...state,
-          status: 'idle',
+          isLoading: false,
           feed: action.payload,
         };
       })
       .addCase(requestFeedFromAPI.rejected, (state) => {
         return {
           ...state,
-          status: 'idle',
+          isLoading: false,
         };
       });
   },

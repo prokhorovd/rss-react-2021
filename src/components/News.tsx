@@ -102,7 +102,7 @@ function News() {
           id={inputID}
           checked={stateValue === inputValue}
           onChange={() => handlerFunction(inputValue)}
-          disabled={feedParameters.status === 'loading'}
+          disabled={feedParameters.isLoading}
         />
       </label>
     );
@@ -118,11 +118,11 @@ function News() {
             placeholder="I'm looking for..."
             value={searchFieldValue}
             onChange={handleSearchValueChange}
-            disabled={feedParameters.status === 'loading'}
+            disabled={feedParameters.isLoading}
           />
         </label>
-        <button type="submit" disabled={feedParameters.status === 'loading'}>
-          {feedParameters.status === 'loading' ? 'Loading...' : 'Search'}
+        <button type="submit" disabled={feedParameters.isLoading}>
+          {feedParameters.isLoading ? 'Loading...' : 'Search'}
         </button>
       </form>
       <div className="feed-controls">
@@ -164,7 +164,7 @@ function News() {
           <button
             onClick={handleClickS}
             name="prev"
-            disabled={feedParameters.pageNum === 1 || feedParameters.status === 'loading'}
+            disabled={feedParameters.pageNum === 1 || feedParameters.isLoading}
           >
             Previous page
           </button>
@@ -172,11 +172,11 @@ function News() {
             onClick={handleClickS}
             name="next"
             disabled={
-              feedParameters.feed.articles === undefined
+              !!feedParameters.feed.articles
               || feedParameters.feed.articles.length === 0
               || feedParameters.feed.articles.length === 1
               || feedParameters.totalResults === 0
-              || feedParameters.status === 'loading'
+              || feedParameters.isLoading
             }
           >
             Next page

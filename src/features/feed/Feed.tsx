@@ -10,10 +10,10 @@ function Feed() {
     pageSize,
     sortBy,
     pageNum,
-    status,
+    isLoading,
   } = feedParameters;
   const { totalResults, articles } = feedParameters.feed;
-  if (status === 'loading') {
+  if (isLoading) {
     return (
       <div>
         Loading
