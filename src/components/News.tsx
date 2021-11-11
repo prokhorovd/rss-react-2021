@@ -78,13 +78,13 @@ function News() {
     }
   };
 
-  type InputParams = {
+  interface InputParams {
     inputID: string,
     inputName: string,
     inputValue: string | number,
     stateValue: string | number,
-    handlerFunction,
-  };
+    handlerFunction: Function,
+  }
 
   const renderPageSizeInput = (params: InputParams) => {
     const {
