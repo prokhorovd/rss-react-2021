@@ -15,8 +15,7 @@ interface Props {
   routes: RoutesListItem[];
 }
 
-const RenderContent: FC<Props> = (props) => {
-  const { routes } = props;
+const RenderContent: FC<Props> = ({ routes }) => {
   const location = useLocation();
   const browserPath = location.pathname;
   if (browserPath.split('/')[1] === 'details') {

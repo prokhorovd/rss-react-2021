@@ -15,10 +15,8 @@ function Routing() {
     <Router>
       <nav>
         <ul>
-          {routes.map((routeElement) => {
-            const { path, name } = routeElement;
-            return <RenderNavigation key={path} path={path} name={name} />;
-          })}
+          {routes.map(({ path, name }) => (
+            <RenderNavigation key={path} path={path} name={name} />))}
         </ul>
       </nav>
       <RenderContent routes={routes} />
