@@ -27,7 +27,7 @@ const ArticleBox: FC<Props> = ({ data, searchParams, totalResults }) => {
     .split('')
     .filter((char) => (/:|\.|\/|%|-|\?/.test(char) ? '' : char))
     .join('');
-  if ((!!searchValue || source.name === 'snf') && totalResults === 0) {
+  if (!!searchValue && totalResults === 0) {
     return (
       <div className="article">
         <p>please provide search value!!</p>
