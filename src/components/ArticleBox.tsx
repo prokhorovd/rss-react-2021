@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { Article, SearchParams } from '../types';
 
-function ArticleBox(props: { data: Article, searchParams: SearchParams, totalResults: number }) {
-  const { data, searchParams, totalResults } = props;
+interface Props {
+  data: Article,
+  searchParams: SearchParams,
+  totalResults: number,
+}
+
+const ArticleBox: FC<Props> = ({ data, searchParams, totalResults }) => {
   const {
     author,
     url,
