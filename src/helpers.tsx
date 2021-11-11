@@ -20,7 +20,7 @@ const loadDataFromApi = async (args: Args) => {
       let address = `https://newsapi.org/v2/everything?q=${searchValue}`
         + `&from=2021-10-15&sortBy=${sortBy}&apiKey=${apiKey}`
         + `&pageSize=${pageSize}`;
-      if (pageNum !== undefined) {
+      if (pageNum) {
         address += `&page=${pageNum}`;
       }
       const req = new Request(address);

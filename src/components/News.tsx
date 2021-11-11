@@ -57,7 +57,7 @@ function News() {
     dispatch(requestFeedFromAPI(linkArgs));
   };
 
-  const handleClickS = async (event: MouseEventHandler<HTMLButtonElement>) => {
+  const handleClick = async (event: MouseEventHandler<HTMLButtonElement>) => {
     const { name } = event.target;
     if (name === 'prev') {
       const newPageNum = feedParameters.pageNum - 1;
@@ -160,17 +160,17 @@ function News() {
             {feedParameters.feed.totalResults === 0 ? '' : (Math.floor(feedParameters.feed.totalResults / feedParameters.pageSize))}
           </p>
           <button
-            onClick={handleClickS}
+            onClick={handleClick}
             name="prev"
             disabled={feedParameters.pageNum === 1 || feedParameters.isLoading}
           >
             Previous page
           </button>
           <button
-            onClick={handleClickS}
+            onClick={handleClick}
             name="next"
             disabled={
-              !!feedParameters.feed.articles
+              !feedParameters.feed.articles
               || feedParameters.feed.articles.length === 0
               || feedParameters.feed.articles.length === 1
               || feedParameters.totalResults === 0
