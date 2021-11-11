@@ -1,0 +1,20 @@
+import React from 'react';
+
+function About() {
+  return (
+    <div>
+      <h3>This is &apos;about&apos; page</h3>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Ut pretium facilisis porttitor. Nunc efficitur quis enim non cursus.
+        Aliquam vel gravida nisi, et molestie nisi. Nam sagittis turpis ut malesuada pretium.
+        Quisque ornare mauris ligula, vitae lacinia erat vestibulum eget.
+        Vestibulum vel sollicitudin quam, ut dignissim dolor.
+        Aenean tempus gravida nulla, eget cursus augue accumsan id.
+        Aliquam in tempor mi, a sagittis quam.
+      </p>
+    </div>
+  );
+}
+
+export default About;
