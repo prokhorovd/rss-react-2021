@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, {useState, useMemo, useEffect} from 'react';
 import { useLocation } from 'react-router';
 import loadDataFromApi, { Args } from '../helpers';
 import Article, { ArticleInfo } from './Article';
@@ -58,9 +58,11 @@ function Details() {
     setResult(filteredArticle);
     setIsLoading(false);
   };
-  if (!result) {
+
+  useEffect(() => {
     getResult();
-  }
+  }, []);
+
   if (!!result && result.title === 'Not found') {
     return (
       <div>
