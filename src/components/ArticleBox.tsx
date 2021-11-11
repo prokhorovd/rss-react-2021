@@ -20,7 +20,7 @@ function ArticleBox(props: { data: Article, searchParams: SearchParams, totalRes
   const date = new Date(publishedAt);
   const id = url
     .split('')
-    .filter((char) => /:|\.|\/|%|-|\?/.test(char) ? '' : char)
+    .filter((char) => (/:|\.|\/|%|-|\?/.test(char) ? '' : char))
     .join('');
   if ((searchValue === '' || source.name === 'snf') && totalResults === 0) {
     return (
@@ -45,7 +45,7 @@ function ArticleBox(props: { data: Article, searchParams: SearchParams, totalRes
         </span>
       </p>
       <img className="article__img" src={urlToImage} alt="news" />
-      <Link to={`/details/searchValue=${searchValue}&sortBy=${sortBy}&id=${id}`}>Details</Link>
+      <Link to={`/details?searchValue=${searchValue}&sortBy=${sortBy}&id=${id}`}>Details</Link>
     </div>
   );
 }

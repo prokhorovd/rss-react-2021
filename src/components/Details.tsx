@@ -1,87 +1,81 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router';
-import loadDataFromApi from '../helpers';
+import loadDataFromApi, { Args } from '../helpers';
+import Article, { ArticleInfo } from './Article';
+
+function useQuery() {
+  const { search } = useLocation();
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
+
+interface ArticleItem1 {
+  title: string,
+  author: string,
+  description: string,
+  url: string,
+  content: string,
+  publishedAt: string,
+  source: {id: null | string, name: null | string}
+  urlToImage: string,
+}
 
 // function return article object or object with title prop = 'not found';
-const findArticle = (articles, articleId) => {
+const findArticle = (articles: ArticleItem1[], articleId: string | undefined) => {
   const filteredArticles = articles.filter((article) => {
     // transform url to id
     const id = article.url
       .split('')
-      .filter((symbol: string) => /:|\.|\/|%|-|\?/.test(symbol) ? '' : symbol)
+      .filter((symbol: string) => (/:|\.|\/|%|-|\?/.test(symbol) ? '' : symbol))
       .join('');
     // check for match
     if (id === articleId) {
       return article;
     }
+    return false;
   });
-  if (filteredArticles.length === 0) {
+  if (!filteredArticles.length) {
     return { title: 'Not found' };
   }
   return filteredArticles[0];
 };
 
-function RenderArticleData(props) {
-  const { data } = props;
-  const key = data[0];
-  let value = '';
-  if (typeof data[1] === 'string') {
-    value = data[1].toString();
-  } else if (typeof data[1] === 'object' && data[1] !== null) {
-    value = data[1].name;
-  } else {
-    value = 'null';
-  }
-  return (
-    <div>
-      <b>
-        {key}
-        {': '}
-      </b>
-      {value}
-    </div>
-  );
-}
-
 function Details() {
-  const [result, setResult] = useState({ title: 'Loading...' });
-  // disassemble link and get params
-  const location = useLocation();
-  const path = location.pathname;
-  const linkParamsStr = path.split('/')[2];
-  const linkParamsObj = {
+  const [result, setResult] = useState<ArticleInfo | null>(null);
+  // START REFACTOR
+  // get params from link
+  const linkParams: Args = {
     searchValue: '',
     pageSize: 100,
     sortBy: 'publishedAt',
     id: '',
   };
-  linkParamsStr.split('&').map((param) => {
-    const key = param.split('=')[0];
-    const value = param.split('=')[1];
-    linkParamsObj[key] = value;
+  const query = useQuery();
+  const queryParams = ['searchValue', 'sortBy', 'id'];
+  queryParams.forEach((element) => {
+    linkParams[element] = query.get(element);
   });
-  // get articles, found match, render info
+  // request news and look for match
   const getResult = async () => {
     // get last 100 news from api
-    const data = await loadDataFromApi(linkParamsObj);
+    const data = await loadDataFromApi(linkParams);
     // filter articles
-    const filteredArticle = findArticle(data.articles, linkParamsObj.id);
+    const filteredArticle = findArticle(data.articles, linkParams.id);
     setResult(filteredArticle);
   };
-  // useEffect to refresh result
-  useEffect(() => {
-    if (result.title === 'Loading...') {
-      getResult();
-    }
-  }, []);
-  const articleData = Object.entries(result);
+  if (!result) {
+    getResult();
+  }
+  // console.log(result);
+  if (!!result && result.title === 'Not found') {
+    return (
+      <div>
+        Not found
+      </div>
+    );
+  }
   return (
     <div>
-      {articleData.map((element) => {
-        return (
-          <RenderArticleData key={element[1]} data={element} />
-        );
-      })}
+      {result ? <Article data={result} /> : 'Loading...'}
     </div>
   );
 }

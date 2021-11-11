@@ -5,6 +5,7 @@ export interface Args {
   pageSize: number,
   sortBy: string,
   pageNum?: number,
+  id?: string
 }
 
 const loadDataFromApi = async (args: Args) => {
