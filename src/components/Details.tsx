@@ -41,6 +41,7 @@ const findArticle = (articles: ArticleItem1[], articleId: string | undefined | n
 
 function Details() {
   const [result, setResult] = useState<ArticleInfo | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   // get params from link
   const query = useQuery();
   const linkParams: Args = {
@@ -55,6 +56,7 @@ function Details() {
     // filter articles
     const filteredArticle = findArticle(data.articles, linkParams.id);
     setResult(filteredArticle);
+    setIsLoading(false);
   };
   if (!result) {
     getResult();
@@ -68,7 +70,7 @@ function Details() {
   }
   return (
     <div>
-      {result ? <Article data={result} /> : 'Loading...'}
+      {isLoading ? 'Loading...' : <Article data={result} />}
     </div>
   );
 }
