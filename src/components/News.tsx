@@ -133,7 +133,6 @@ function News() {
               inputID: element.inputID,
               inputName: element.inputName,
               inputValue: element.inputValue,
-              stateName: 'pageSize',
               stateValue: feedParameters.pageSize,
               handlerFunction: handlePageSizeChange,
             };
@@ -147,7 +146,6 @@ function News() {
               inputID: element.inputID,
               inputName: element.inputName,
               inputValue: element.inputValue,
-              stateName: 'sortBy',
               stateValue: feedParameters.sortBy,
               handlerFunction: handleSortByChange,
             };
