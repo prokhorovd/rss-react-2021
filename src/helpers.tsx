@@ -18,7 +18,7 @@ const loadDataFromApi = async (args: Args) => {
   try {
     if (searchValue !== '') {
       let address = `https://newsapi.org/v2/everything?q=${searchValue}`
-        + `&from=2021-10-15&sortBy=${sortBy}&apiKey=${apiKey}`
+        + `&from=2021-11-15&sortBy=${sortBy}&apiKey=${apiKey}`
         + `&pageSize=${pageSize}`;
       if (pageNum) {
         address += `&page=${pageNum}`;
