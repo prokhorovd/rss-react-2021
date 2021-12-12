@@ -5,10 +5,9 @@ import { Article, SearchParams } from '../types';
 interface Props {
   data: Article,
   searchParams: SearchParams,
-  totalResults: number,
 }
 
-const ArticleBox: FC<Props> = ({ data, searchParams, totalResults }) => {
+const ArticleBox: FC<Props> = ({ data, searchParams }) => {
   const {
     author,
     url,
@@ -27,13 +26,6 @@ const ArticleBox: FC<Props> = ({ data, searchParams, totalResults }) => {
     .split('')
     .filter((char) => (/:|\.|\/|%|-|\?/.test(char) ? '' : char))
     .join('');
-  if (!!searchValue && totalResults === 0) {
-    return (
-      <div className="article">
-        <p>please provide search value!!</p>
-      </div>
-    );
-  }
   return (
     <div className="article">
       <h3>{title}</h3>
@@ -53,6 +45,6 @@ const ArticleBox: FC<Props> = ({ data, searchParams, totalResults }) => {
       <Link to={`/details?searchValue=${searchValue}&sortBy=${sortBy}&id=${id}`}>Details</Link>
     </div>
   );
-}
+};
 
 export default ArticleBox;
