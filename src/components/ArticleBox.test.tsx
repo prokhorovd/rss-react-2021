@@ -2,27 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import ArticleBox from './ArticleBox';
-
-const testData = {
-  id: 'some id',
-  author: 'Roland Hutchinson',
-  content: 'Mercedes Benz is the first company in the world to receive approval for level 3 automated driving, beating the likes of Tesla and others.',
-  description: 'Mercedes Benz is the first company in the world to receive approval for level 3 automated driving, beating the likes of Tesla and others.',
-  publishedAt: '2021-12-10T10:45:11Z',
-  source: {
-    id: 'testID',
-    name: 'Geeky Gadgets',
-  },
-  title: 'Mercedes gets level 3 automated driving approval',
-  url: 'https://www.geeky-gadgets.com/mercedes-gets-level-3-automated-driving-approval-10-12-2021/',
-  urlToImage: 'https://www.geeky-gadgets.com/wp-content/uploads/2021/12/Mercedes-level-3-automated-driving',
-};
-const testSearchParameters = {
-  pageNum: 1,
-  pageSize: 10,
-  searchValue: 'tesla',
-  sortBy: 'publishedAt',
-};
+import { testData, testSearchParameters} from '../__tests_mocks/test-mocks';
 
 beforeEach(() => {
   render(
