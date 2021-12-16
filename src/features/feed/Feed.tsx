@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectFeedParameters } from './feedSlice';
 import ArticleBox from '../../components/ArticleBox';
+import { Article } from '../../types';
 
 function Feed() {
   const feedParameters = useSelector(selectFeedParameters);
@@ -36,11 +37,10 @@ function Feed() {
   }
   return (
     <div className="articles-field">
-      {articles.map((element) => (
+      {articles.map((element: Article) => (
         <ArticleBox
           key={element.url}
           data={element}
-          totalResults={totalResults}
           searchParams={{
             searchValue,
             pageSize,

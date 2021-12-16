@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { ComponentState } from 'react';
 import loadDataFromApi, { Args } from '../../helpers';
+
 
 enum SortNewsOptions {
   PublishedAt = 'publishedAt',
@@ -84,6 +86,6 @@ export const {
   setSearchValue, setPageSize, setSortBy, setPageNum,
 } = feedSlice.actions;
 
-export const selectFeedParameters = (state) => state.feedParameters;
+export const selectFeedParameters = (state: ComponentState) => state.feedParameters;
 
 export default feedSlice.reducer;
