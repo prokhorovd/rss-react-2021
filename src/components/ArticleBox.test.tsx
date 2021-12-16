@@ -15,9 +15,9 @@ beforeEach(() => {
   );
 });
 
-describe('ArticleBox component: ', () => {
+describe('<ArticleBox />: ', () => {
   // screen.debug();
-  it('shows data received from api', () => {
+  it('should render data received from api', () => {
     // expect(screen.getByText(new RegExp(testData.author, 'i'))).toBeInTheDocument();
     expect(screen.getByText(testData.title, { exact: false })).toBeInTheDocument();
     expect(screen.getByText(testData.source.name, { exact: false })).toBeInTheDocument();
@@ -26,12 +26,12 @@ describe('ArticleBox component: ', () => {
     expect(screen.getByText(testData.content, { exact: false })).toBeInTheDocument();
     expect(screen.getByText(testData.description, { exact: false })).toBeInTheDocument();
   });
-  it('have date of publishing', () => {
+  it('should have date of publishing', () => {
     // published at
     const publicationDate = (new Date(testData.publishedAt)).toLocaleString();
     expect(screen.getByText(publicationDate, { exact: false })).toBeInTheDocument();
   });
-  it('have correct link to source and source img', () => {
+  it('should have correct link to source and source img', () => {
     // Read more link
     const link = screen.getByRole('link', { name: /read more/i }).getAttribute('href');
     expect(link).toBe(testData.url);
@@ -40,7 +40,7 @@ describe('ArticleBox component: ', () => {
     const imgLink = screen.getByAltText('news').getAttribute('src');
     expect(imgLink).toBe(testData.urlToImage);
   });
-  it('correctly generate output link for details component', () => {
+  it('should correctly generate output link for details component', () => {
     const idTransform = testData.url
       .split('')
       .filter((char) => (/:|\.|\/|%|-|\?/.test(char) ? '' : char))
