@@ -36,12 +36,11 @@ const loadDataFromApi = async (args: Args) => {
       if (pageNum) {
         address += `&page=${pageNum}`;
       }
-      const req = new Request(address);
-      const result = await fetch(req);
+      const result = await fetch(address);
       return await result.json();
     }
   } catch (e) {
-    console.error('error has occurred: ', e);
+    return new Error('test error');
   }
   return {
     totalResults: 0,
