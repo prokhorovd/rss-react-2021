@@ -17,6 +17,10 @@ const defineStartNewsDate = () => {
   return `${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()}`;
 };
 
+export const defineStartNewsDateForTesting = {
+  defineStartNewsDate,
+};
+
 const loadDataFromApi = async (args: Args) => {
   const {
     searchValue,
