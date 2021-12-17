@@ -18,3 +18,27 @@ export const testSearchParameters = {
   searchValue: 'tesla',
   sortBy: 'publishedAt',
 };
+
+export const argsMockEmptyRequest = {
+  searchValue: '',
+  sortBy: 'publishedAt',
+};
+
+export const argsMockFirst100Results = {
+  searchValue: 'apple',
+  pageNum: 1,
+  sortBy: 'publishedAt',
+};
+
+export const argsMockFirst100ResultsArgs = 'https://newsapi.org/v2/everything?q=apple&from=2021-12-2&sortBy=publishedAt&apiKey=f1eca3f7183846eea73575a543a71641&pageSize=100&page=1';
+
+export const argsMockError = {
+  searchValue: 'error',
+  sortBy: 'publishedAt',
+};
+
+export const apiAnswerCaseOkMock = {
+  status: 'ok',
+  totalResults: 100,
+  articles: [{}, {}, {}],
+};
