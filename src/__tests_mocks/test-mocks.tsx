@@ -42,3 +42,15 @@ export const apiAnswerCaseOkMock = {
   totalResults: 100,
   articles: [{}, {}, {}],
 };
+
+export const mockState = {
+  searchValue: '',
+  pageSize: 10,
+  sortBy: 'publishedAt',
+  pageNum: 1,
+  isLoading: false,
+  feed: {
+    totalResults: 0,
+    articles: [],
+  },
+};
