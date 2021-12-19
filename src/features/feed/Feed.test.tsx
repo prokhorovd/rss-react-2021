@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
 import Feed from './Feed';
 import { mockState } from '../../__tests_mocks/test-mocks';
 
@@ -26,5 +27,16 @@ describe('<Feed />', () => {
     mockState.searchValue = 'something';
     render(<Feed />);
     expect(screen.getByText(/Nothing found/i)).toBeInTheDocument();
+  });
+  it('should render articleboxes for articles', () => {
+    mockState.searchValue = 'apple';
+    mockState.isLoading = false;
+    mockState.feed.totalResults = 1;
+    render(
+      <BrowserRouter>
+        <Feed />
+      </BrowserRouter>,
+    );
+    expect(screen.getByRole('heading', { name: /mercedes gets level 3/i })).toBeInTheDocument();
   });
 });

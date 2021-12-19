@@ -30,7 +30,7 @@ export const argsMockFirst100Results = {
   sortBy: 'publishedAt',
 };
 
-export const argsMockFirst100ResultsArgs = 'https://newsapi.org/v2/everything?q=apple&from=2021-12-2&sortBy=publishedAt&apiKey=f1eca3f7183846eea73575a543a71641&pageSize=100&page=1';
+export const argsMockFirst100ResultsArgs = 'https://newsapi.org/v2/everything?q=apple&from=2021-12-4&sortBy=publishedAt&apiKey=f1eca3f7183846eea73575a543a71641&pageSize=100&page=1';
 
 export const argsMockError = {
   searchValue: 'error',
@@ -51,6 +51,6 @@ export const mockState = {
   isLoading: false,
   feed: {
     totalResults: 0,
-    articles: [],
+    articles: [testData],
   },
 };
