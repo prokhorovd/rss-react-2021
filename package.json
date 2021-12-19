@@ -6,7 +6,7 @@
   "scripts": {
     "serve": "webpack serve --config ./webpack/webpack.config.js --env env=dev",
     "build": "webpack --config ./webpack/webpack.config.js --env env=prod",
-    "test": "npx jest",
+    "test": "jest",
     "testc": "jest --coverage",
     "eslint": "eslint ."
   },
@@ -24,7 +24,8 @@
     "react-redux": "^7.2.6",
     "react-router": "^5.2.1",
     "react-router-dom": "^5.3.0",
-    "react-transition-group": "^4.4.2"
+    "react-transition-group": "^4.4.2",
+    "redux": "^4.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",

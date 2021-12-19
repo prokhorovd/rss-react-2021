@@ -2,8 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ComponentState } from 'react';
 import loadDataFromApi, { Args } from '../../helpers';
 
-
-enum SortNewsOptions {
+export enum SortNewsOptions {
   PublishedAt = 'publishedAt',
   Relevancy = 'relevancy',
   Popularity = 'popularity',
