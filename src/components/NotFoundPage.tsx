@@ -6,7 +6,7 @@ function NotFoundPage() {
     <div>
       Page not found
       {' '}
-      <Link to="/">Return to main page</Link>
+      <Link data-testid="link-to-main-page" to="/">Return to main page</Link>
     </div>
   );
 }

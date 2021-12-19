@@ -109,6 +109,7 @@ function News() {
 
   return (
     <div className="page-wrap">
+      <h3>News search</h3>
       <form className="search-form" onSubmit={handleSubmit}>
         <label htmlFor="search">
           <input
@@ -159,6 +160,7 @@ function News() {
             {feedParameters.feed.totalResults === 0 ? '' : (Math.floor(feedParameters.feed.totalResults / feedParameters.pageSize))}
           </p>
           <button
+            type="button"
             onClick={handleClickPrevPage}
             name="prev"
             disabled={feedParameters.pageNum === 1 || feedParameters.isLoading}
@@ -166,6 +168,7 @@ function News() {
             Previous page
           </button>
           <button
+            type="button"
             onClick={handleClickNextPage}
             name="next"
             disabled={

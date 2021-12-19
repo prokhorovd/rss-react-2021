@@ -8,6 +8,19 @@ export interface Args {
   id?: string | null,
 }
 
+const defineStartNewsDate = () => {
+  // change daysCount to change search period
+  const daysCount = 15;
+  const today = new Date();
+  const startDateInMs = today.setDate(today.getDate() - daysCount);
+  const startDate = new Date(startDateInMs);
+  return `${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()}`;
+};
+
+export const defineStartNewsDateForTesting = {
+  defineStartNewsDate,
+};
+
 const loadDataFromApi = async (args: Args) => {
   const {
     searchValue,
@@ -18,17 +31,16 @@ const loadDataFromApi = async (args: Args) => {
   try {
     if (searchValue !== '') {
       let address = `https://newsapi.org/v2/everything?q=${searchValue}`
-        + `&from=2021-10-15&sortBy=${sortBy}&apiKey=${apiKey}`
+        + `&from=${defineStartNewsDate()}&sortBy=${sortBy}&apiKey=${apiKey}`
         + `&pageSize=${pageSize}`;
       if (pageNum) {
         address += `&page=${pageNum}`;
       }
-      const req = new Request(address);
-      const result = await fetch(req);
+      const result = await fetch(address);
       return await result.json();
     }
   } catch (e) {
-    console.error('error has occurred: ', e);
+    return new Error('test error');
   }
   return {
     totalResults: 0,
