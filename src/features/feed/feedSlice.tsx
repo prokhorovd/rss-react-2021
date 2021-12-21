@@ -32,52 +32,38 @@ export const feedSlice = createSlice({
   name: 'feedParameters',
   initialState,
   reducers: {
-    setSearchValue: (state, action) => {
-      return {
-        ...state,
-        searchValue: action.payload,
-      };
-    },
-    setPageSize: (state, action) => {
-      return {
-        ...state,
-        pageSize: action.payload,
-      };
-    },
-    setSortBy: (state, action) => {
-      return {
-        ...state,
-        sortBy: action.payload,
-      };
-    },
-    setPageNum: (state, action) => {
-      return {
-        ...state,
-        pageNum: action.payload,
-      };
-    },
+    setSearchValue: (state, action) => ({
+      ...state,
+      searchValue: action.payload,
+    }),
+    setPageSize: (state, action) => ({
+      ...state,
+      pageSize: action.payload,
+    }),
+    setSortBy: (state, action) => ({
+      ...state,
+      sortBy: action.payload,
+    }),
+    setPageNum: (state, action) => ({
+      ...state,
+      pageNum: action.payload,
+    }),
   },
   extraReducers: (builder) => {
     builder
-      .addCase(requestFeedFromAPI.pending, (state) => {
-        return {
-          ...state,
-          isLoading: true,
-        };
-      })
-      .addCase(requestFeedFromAPI.fulfilled, (state, action) => {
-        return {
-          ...state,
-          isLoading: false,
-          feed: action.payload,
-        };
-      })
-      .addCase(requestFeedFromAPI.rejected, (state) => {
-        return {
-          ...state,
-          isLoading: false,
-        };
-      });
+      .addCase(requestFeedFromAPI.pending, (state) => ({
+        ...state,
+        isLoading: true,
+      }))
+      .addCase(requestFeedFromAPI.fulfilled, (state, action) => ({
+        ...state,
+        isLoading: false,
+        feed: action.payload,
+      }))
+      .addCase(requestFeedFromAPI.rejected, (state) => ({
+        ...state,
+        isLoading: false,
+      }));
   },
 });
 
