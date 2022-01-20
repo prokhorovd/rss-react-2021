@@ -1,4 +1,4 @@
-import React, {useState, useMemo, useEffect} from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import loadDataFromApi, { Args } from '../helpers';
 import Article, { ArticleInfo } from './Article';
@@ -61,6 +61,7 @@ function Details() {
 
   useEffect(() => {
     getResult();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!!result && result.title === 'Not found') {
