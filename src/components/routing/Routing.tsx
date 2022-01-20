@@ -1,5 +1,4 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
 import News from '../News';
 import About from '../About';
 import RenderNavigation from './RenderNavigation';
@@ -12,7 +11,7 @@ const routes = [
 
 function Routing() {
   return (
-    <Router>
+    <div>
       <nav>
         <ul>
           {routes.map(({ path, name }) => (
@@ -20,7 +19,7 @@ function Routing() {
         </ul>
       </nav>
       <RenderContent routes={routes} />
-    </Router>
+    </div>
   );
 }
 
