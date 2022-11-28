@@ -1,3 +1,28 @@
+## Project to learn React framework (January 2022)
+
+Server side rendering React app. This application can request news from newsapi.org and show them in cards-components.
+
+Development began with using JavaScript and class components, later it was transitioned to TypeScript and functional components.
+*Project was made from scratch without out-of-box solutions like create-react-app, next.js, etc.*
+
+### How to use:
+- clone this repo;
+- `git checkout react-ssr` will transfer you to last implemented branch;
+- `npm i` to install dependencies;
+- `npm run build:all` to build client and server;
+- `npm run start:server` to start a server (default port 3000);
+
+### Branches description (in implementation order):
+- `react-components` - setting up webpack for react-project (dev/prod config + eslint with airbnb config, prettier), creation of test component;
+- `react-forms` - creation of forms that going to be used to collect information (input, select, checkbox, switcher). Implementation of fields content validation. Cards with collected info will be generated on form submit;
+- `react-api` - search field implementation. On input event field generates api request to newsapi.org, results will be shown on a page. Implementation of sorting, pagination, loading indication;
+- `react-router` - Transition development to using functional components. Implement dummy page, 404 page and navigation between all existing pages using react-router. Add page transition animation. Add the ability to check details of specific news - implemented using detailed request to api.
+- `react-redux` - configure store, add provider, move api requests and data exchange of components to redux.
+- `react-testing` - cover the functionality with tests (jest + react-testing-library);
+- `react-ssr` - implement Isomorphic React App without using ready-made solutions. Express server was used, it generates template which later hydrates on a client side.
+
+___
+
 ## Учебный проект по изучению фреймворка React. (Январь 2022)
 
 React-SSR-приложение для запроса новостей с newsapi.org и последующего отображения их в карточках-компонентах.
